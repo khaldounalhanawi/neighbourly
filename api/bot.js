@@ -8,7 +8,7 @@ app.use(bodyParser.json());
 const BOT_TOKEN = process.env.BOT_TOKEN;
 const TELEGRAM_API = `https://api.telegram.org/bot${BOT_TOKEN}`;
 
-app.post("/api/bot", async (req, res) => {
+app.post("/", async (req, res) => {
   console.log("Telegram update received:", req.body);
 
   const { message } = req.body;
