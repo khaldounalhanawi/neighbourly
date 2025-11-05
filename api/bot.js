@@ -36,5 +36,5 @@ app.post("/api/bot", async (req, res) => {
 
   res.sendStatus(200);
 });
-
+console.log("Telegram update received:", req.body);
 export default app;
