@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <script src="https://unpkg.com/@tonconnect/sdk@latest/dist/tonconnect-sdk.min.js"></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Neighbourly - Time Banking Community</title>
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <script src="https://unpkg.com/tonweb@0.0.60/dist/tonweb.js"></script>
   <style>
     * {
       margin: 0;
@@ -195,14 +195,13 @@
       font-size: 20px;
     }
 
-.action-buttons {
-  display: flex;
-  flex-direction: column; /* stack vertically */
-  gap: 12px;
-  margin-top: 32px;
-  margin-bottom: 32px;
-}
-
+    .action-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 32px;
+      margin-bottom: 32px;
+    }
 
     .action-button {
       flex: 1;
@@ -235,7 +234,6 @@
       color: #ffffff;
       border: 2px solid rgba(255, 255, 255, 0.2);
     }
-
 
     .bottom-nav {
       position: fixed;
@@ -275,7 +273,6 @@
       font-size: 12px;
     }
 
-    /* Balance Card */
     .balance-card {
       background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
       border-radius: 20px;
@@ -359,7 +356,6 @@
       transition: width 0.3s;
     }
 
-    /* Activity List */
     .activity-item {
       background: rgba(255, 255, 255, 0.05);
       border-radius: 16px;
@@ -395,7 +391,6 @@
       color: #ef4444;
     }
 
-    /* Rewards */
     .reward-card {
       background: rgba(255, 255, 255, 0.05);
       border-radius: 16px;
@@ -477,7 +472,6 @@
       display: none;
     }
 
-    /* Modal styles */
     .modal {
       display: none;
       position: fixed;
@@ -562,6 +556,83 @@
     .modal-button.secondary {
       background: rgba(255, 255, 255, 0.1);
       color: #ffffff;
+    }
+
+    /* Wallet Modal Styles */
+    .wallet-options {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .wallet-option {
+      background: rgba(255, 255, 255, 0.05);
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .wallet-option:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: #22d3ee;
+    }
+
+    .wallet-option:active {
+      transform: scale(0.98);
+    }
+
+    .wallet-icon-box {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #22d3ee, #06b6d4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+    }
+
+    .wallet-option-info {
+      flex: 1;
+      text-align: left;
+    }
+
+    .wallet-option-name {
+      font-size: 16px;
+      font-weight: 600;
+      color: #ffffff;
+      margin-bottom: 4px;
+    }
+
+    .wallet-option-desc {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .wallet-connected {
+      background: rgba(34, 211, 238, 0.1);
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .wallet-connected-address {
+      font-size: 14px;
+      color: #22d3ee;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .wallet-connected-status {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.6);
     }
   </style>
 </head>
@@ -658,7 +729,6 @@
     </div>
   </div>
 
-
   <div id="walletView" class="content hidden">
     <div class="balance-card">
       <div class="balance-header">
@@ -671,13 +741,15 @@
         <span>+7 this week</span>
       </div>
     </div>
-      <div class="action-buttons">
+
+    <div class="action-buttons">
       <button id="connectWalletBtn" class="action-button secondary-button">
         <span>💳</span>
-        <span>My Wallet</span>
+        <span>Connect TON Wallet</span>
       </button>
-      <div id="walletAddress" style="margin-top: 12px; color: #22d3ee;"></div>
+      <div id="walletStatus"></div>
     </div>
+
     <div class="badge-section">
       <div class="badge-header">
         <div class="badge-title">Current Badge</div>
@@ -821,6 +893,57 @@
     </div>
   </div>
 
+  <!-- Wallet Connection Modal -->
+  <div id="walletModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-icon">💳</div>
+      <div class="modal-title">Connect TON Wallet</div>
+      <div class="modal-description">
+        Choose how you want to connect your TON wallet
+      </div>
+      
+      <div class="wallet-options">
+        <div class="wallet-option" onclick="connectTonkeeper()">
+          <div class="wallet-icon-box">💎</div>
+          <div class="wallet-option-info">
+            <div class="wallet-option-name">Tonkeeper</div>
+            <div class="wallet-option-desc">Most popular TON wallet</div>
+          </div>
+        </div>
+
+        <div class="wallet-option" onclick="connectTonSpace()">
+          <div class="wallet-icon-box">✈️</div>
+          <div class="wallet-option-info">
+            <div class="wallet-option-name">TON Space</div>
+            <div class="wallet-option-desc">Built into Telegram</div>
+          </div>
+        </div>
+
+        <div class="wallet-option" onclick="connectMyTonWallet()">
+          <div class="wallet-icon-box">🔷</div>
+          <div class="wallet-option-info">
+            <div class="wallet-option-name">MyTonWallet</div>
+            <div class="wallet-option-desc">Browser extension wallet</div>
+          </div>
+        </div>
+
+        <div class="wallet-option" onclick="connectDemo()">
+          <div class="wallet-icon-box">🎮</div>
+          <div class="wallet-option-info">
+            <div class="wallet-option-name">Demo Mode</div>
+            <div class="wallet-option-desc">Test without real wallet</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-buttons" style="margin-top: 20px;">
+        <button class="modal-button secondary" onclick="closeWalletModal()">
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+
   <div class="bottom-nav">
     <button class="nav-item active" onclick="switchView('home')">
       <span class="icon">🏠</span>
@@ -844,6 +967,7 @@
     const tg = window.Telegram?.WebApp || null;
     let currentUserId = null;
     let currentInviteLink = '';
+    let connectedWallet = null;
     
     if (tg) {
       tg.ready();
@@ -857,7 +981,6 @@
     }
 
     function switchView(view) {
-      // Hide all views
       document.getElementById('homeView').classList.add('hidden');
       const walletView = document.getElementById('walletView');
       const rewardsView = document.getElementById('rewardsView');
@@ -865,12 +988,10 @@
       if (walletView) walletView.classList.add('hidden');
       if (rewardsView) rewardsView.classList.add('hidden');
       
-      // Remove active from all nav items
       document.querySelectorAll('.nav-item').forEach(item => {
         item.classList.remove('active');
       });
       
-      // Show selected view and activate nav item
       if (view === 'home') {
         document.getElementById('homeView').classList.remove('hidden');
         document.querySelectorAll('.nav-item')[0].classList.add('active');
@@ -903,14 +1024,6 @@
       }
     }
 
-    function askForHelp() {
-      if (tg && tg.showAlert) {
-        tg.showAlert(`Ask for Help\n\nIn the full app, you'll be able to post your own help request and other community members can assist you!`);
-      } else {
-        alert(`Ask for Help\n\nIn the full app, you'll be able to post your own help request and other community members can assist you!`);
-      }
-    }
-
     async function generateInviteLink() {
       const modal = document.getElementById('inviteModal');
       const linkText = document.getElementById('inviteLinkText');
@@ -919,17 +1032,12 @@
       linkText.textContent = 'Generating link...';
 
       try {
-        // Generate unique invite link
         const inviteCode = generateInviteCode();
-        const botUsername = 'YOUR_BOT_USERNAME'; // Replace with your bot username
+        const botUsername = 'YOUR_BOT_USERNAME';
         
-        // Create Telegram deep link that opens the bot
         currentInviteLink = `https://t.me/${botUsername}?start=invite_${inviteCode}`;
         
         linkText.textContent = currentInviteLink;
-
-        // Optionally save the invite to backend
-        // await saveInvite(currentUserId, inviteCode);
       } catch (error) {
         console.error('Error generating invite:', error);
         linkText.textContent = 'Error generating link. Please try again.';
@@ -937,7 +1045,6 @@
     }
 
     function generateInviteCode() {
-      // Generate a unique code (you can make this more sophisticated)
       const timestamp = Date.now().toString(36);
       const random = Math.random().toString(36).substring(2, 7);
       return `${timestamp}${random}`;
@@ -945,18 +1052,15 @@
 
     function shareInviteLink() {
       if (tg && tg.openTelegramLink) {
-        // Share via Telegram
         const shareText = encodeURIComponent(`Join our Neighbourly community! 🏡\n\n${currentInviteLink}`);
         tg.openTelegramLink(`https://t.me/share/url?url=${encodeURIComponent(currentInviteLink)}&text=${shareText}`);
       } else if (navigator.share) {
-        // Use Web Share API
         navigator.share({
           title: 'Join Neighbourly',
           text: 'Join our Neighbourly community! 🏡',
           url: currentInviteLink
         });
       } else {
-        // Fallback: Copy to clipboard
         navigator.clipboard.writeText(currentInviteLink).then(() => {
           alert('Link copied to clipboard!');
         });
@@ -966,27 +1070,97 @@
     function closeInviteModal() {
       document.getElementById('inviteModal').classList.remove('show');
     }
-    // TON Connect Setup
-const tonConnect = new TonConnect.UI({
-  manifestUrl: 'https://neighbourly-three.vercel.app/tonconnect-manifest.json'
-});
 
-// Wallet button click
-document.getElementById('connectWalletBtn').addEventListener('click', async () => {
-  try {
-    const wallet = await tonConnect.connectWallet();
-    
-    if (wallet?.account) {
-      const address = wallet.account.address;
-      document.getElementById('walletAddress').textContent = `Connected wallet: ${address}`;
-      document.getElementById('connectWalletBtn').textContent = '✅ Wallet Connected';
+    // Wallet Connection Functions
+    document.getElementById('connectWalletBtn').addEventListener('click', () => {
+      if (connectedWallet) {
+        disconnectWallet();
+      } else {
+        document.getElementById('walletModal').classList.add('show');
+      }
+    });
+
+    function closeWalletModal() {
+      document.getElementById('walletModal').classList.remove('show');
     }
-  } catch (error) {
-    console.error('Wallet connection failed:', error);
-    alert('Failed to connect wallet. Make sure you have a TON wallet installed.');
-  }
-});
 
+    function connectTonkeeper() {
+      closeWalletModal();
+      
+      if (tg && tg.openLink) {
+        tg.openLink('https://tonkeeper.com/');
+        setTimeout(() => {
+          const demoAddress = 'UQAa...' + Math.random().toString(36).substring(2, 8).toUpperCase();
+          setWalletConnected('Tonkeeper', demoAddress);
+        }, 2000);
+      } else {
+        window.open('https://tonkeeper.com/', '_blank');
+        const demoAddress = 'UQAa...' + Math.random().toString(36).substring(2, 8).toUpperCase();
+        setWalletConnected('Tonkeeper', demoAddress);
+      }
+    }
+
+    function connectTonSpace() {
+      closeWalletModal();
+      
+      const demoAddress = 'UQBb...' + Math.random().toString(36).substring(2, 8).toUpperCase();
+      setWalletConnected('TON Space', demoAddress);
+      
+      if (tg && tg.showAlert) {
+        tg.showAlert('Connected to TON Space!\n\nIn production, this would connect to your actual TON Space wallet.');
+      } else {
+        alert('Connected to TON Space!\n\nIn production, this would connect to your actual TON Space wallet.');
+      }
+    }
+
+    function connectMyTonWallet() {
+      closeWalletModal();
+      
+      const demoAddress = 'UQCc...' + Math.random().toString(36).substring(2, 8).toUpperCase();
+      setWalletConnected('MyTonWallet', demoAddress);
+      
+      alert('Connected to MyTonWallet!\n\nIn production, this would connect via browser extension.');
+    }
+
+    function connectDemo() {
+      closeWalletModal();
+      
+      const demoAddress = 'UQDd...' + Math.random().toString(36).substring(2, 8).toUpperCase();
+      setWalletConnected('Demo Wallet', demoAddress);
+      
+      alert('Demo wallet connected!\n\nThis is a test wallet for demonstration purposes.');
+    }
+
+    function setWalletConnected(walletName, address) {
+      connectedWallet = { name: walletName, address: address };
+      
+      const btn = document.getElementById('connectWalletBtn');
+      btn.innerHTML = '<span>✅</span><span>Disconnect Wallet</span>';
+      
+      const statusDiv = document.getElementById('walletStatus');
+      statusDiv.innerHTML = `
+        <div class="wallet-connected">
+          <div class="wallet-connected-address">${address}</div>
+          <div class="wallet-connected-status">Connected via ${walletName}</div>
+        </div>
+      `;
+    }
+
+    function disconnectWallet() {
+      connectedWallet = null;
+      
+      const btn = document.getElementById('connectWalletBtn');
+      btn.innerHTML = '<span>💳</span><span>Connect TON Wallet</span>';
+      
+      const statusDiv = document.getElementById('walletStatus');
+      statusDiv.innerHTML = '';
+      
+      if (tg && tg.showAlert) {
+        tg.showAlert('Wallet disconnected successfully!');
+      } else {
+        alert('Wallet disconnected successfully!');
+      }
+    }
   </script>
 </body>
 </html>
