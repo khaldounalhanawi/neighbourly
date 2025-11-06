@@ -21,49 +21,41 @@
     }
 
     .header {
-      padding: 20px 20px 10px;
+      padding: 24px 20px;
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      gap: 16px;
     }
 
-    .user-info {
+    .badge-display {
+      flex-shrink: 0;
+    }
+
+    .badge-image {
+      width: 33.33vw;
+      max-width: 140px;
+      height: auto;
+      border-radius: 16px;
+      display: block;
+    }
+
+    .header-text {
+      flex: 1;
       display: flex;
       flex-direction: column;
-      align-items: flex-end;
+      justify-content: center;
+    }
+
+    .greeting {
+      font-size: 16px;
+      color: rgba(255, 255, 255, 0.7);
+      margin-bottom: 4px;
     }
 
     .user-name {
-      font-size: 18px;
-      font-weight: 600;
-      color: #ffffff;
-    }
-
-    .user-role {
-      font-size: 14px;
-      color: #22d3ee;
-    }
-
-    .avatar {
-      width: 50px;
-      height: 50px;
-      border-radius: 12px;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
       font-size: 24px;
-    }
-
-    .app-icon {
-      width: 50px;
-      height: 50px;
-      border-radius: 12px;
-      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 28px;
+      font-weight: 700;
+      color: #ffffff;
     }
 
     .nav-tabs {
@@ -101,44 +93,43 @@
     .section-title {
       display: flex;
       align-items: center;
-      gap: 10px;
-      font-size: 20px;
+      gap: 8px;
+      font-size: 18px;
       font-weight: 600;
-      margin-bottom: 16px;
+      margin-bottom: 12px;
       color: #ffffff;
     }
 
     .section-icon {
-      font-size: 24px;
+      font-size: 20px;
     }
 
     /* Leaderboard Styles */
     .leaderboard-item {
       background: rgba(255, 255, 255, 0.05);
-      border-radius: 16px;
-      padding: 16px;
-      margin-bottom: 12px;
+      border-radius: 12px;
+      padding: 12px 16px;
+      margin-bottom: 8px;
       display: flex;
       align-items: center;
-      gap: 16px;
+      gap: 12px;
     }
 
     .rank {
-      font-size: 20px;
+      font-size: 18px;
       font-weight: bold;
-      color: #22d3ee;
-      min-width: 40px;
+      min-width: 32px;
     }
 
     .user-avatar {
-      width: 48px;
-      height: 48px;
-      border-radius: 12px;
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 18px;
-      font-weight: bold;
+      font-size: 16px;
+      font-weight: 600;
       color: white;
     }
 
@@ -147,15 +138,14 @@
     }
 
     .user-details .name {
-      font-size: 16px;
-      font-weight: 600;
+      font-size: 15px;
+      font-weight: 500;
       color: #ffffff;
-      margin-bottom: 4px;
     }
 
     .score {
-      font-size: 24px;
-      font-weight: bold;
+      font-size: 20px;
+      font-weight: 700;
       color: #22d3ee;
     }
 
@@ -431,12 +421,13 @@
 </head>
 <body>
   <div class="header">
-    <div class="avatar">🏡</div>
-    <div class="user-info">
-      <div class="user-name" id="userName">Alex Builder</div>
-      <div class="user-role">Neighbour</div>
+    <div class="badge-display">
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cdefs%3E%3ClinearGradient id='bg' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%231e40af'/%3E%3Cstop offset='100%25' style='stop-color:%2306b6d4'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='200' height='200' rx='20' fill='url(%23bg)'/%3E%3Ccircle cx='100' cy='80' r='35' fill='%23fbbf24'/%3E%3Crect x='75' y='110' width='50' height='60' rx='5' fill='%2322d3ee'/%3E%3Ccircle cx='85' cy='130' r='8' fill='%23f472b6'/%3E%3Ccircle cx='115' cy='130' r='8' fill='%23f472b6'/%3E%3Ctext x='100' y='150' text-anchor='middle' font-size='30' fill='white'%3E🏡%3C/text%3E%3C/svg%3E" alt="Badge" class="badge-image">
     </div>
-    <div class="app-icon">🎨</div>
+    <div class="header-text">
+      <div class="greeting">Hello Neighbour!</div>
+      <div class="user-name" id="userName">Alex Builder</div>
+    </div>
   </div>
 
   <div id="homeView" class="content">
@@ -446,7 +437,7 @@
     </h2>
 
     <div class="leaderboard-item">
-      <div class="rank">#1</div>
+      <div class="rank">🥇</div>
       <div class="user-avatar" style="background: linear-gradient(135deg, #06b6d4, #0891b2);">SA</div>
       <div class="user-details">
         <div class="name">Sarah Green</div>
@@ -455,7 +446,7 @@
     </div>
 
     <div class="leaderboard-item">
-      <div class="rank">#2</div>
+      <div class="rank">🥈</div>
       <div class="user-avatar" style="background: linear-gradient(135deg, #3b82f6, #2563eb);">MI</div>
       <div class="user-details">
         <div class="name">Mike Stone</div>
@@ -464,7 +455,7 @@
     </div>
 
     <div class="leaderboard-item">
-      <div class="rank">#3</div>
+      <div class="rank">🥉</div>
       <div class="user-avatar" style="background: linear-gradient(135deg, #06b6d4, #0891b2);">EM</div>
       <div class="user-details">
         <div class="name">Emma Wood</div>
