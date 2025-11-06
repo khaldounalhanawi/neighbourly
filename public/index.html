@@ -98,34 +98,6 @@
       color: rgba(255, 255, 255, 0.5);
     }
 
-    .nav-tabs {
-      display: flex;
-      justify-content: space-around;
-      padding: 0 20px;
-      margin: 20px 0;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .nav-tab {
-      padding: 12px 0;
-      color: rgba(255, 255, 255, 0.5);
-      background: none;
-      border: none;
-      border-bottom: 3px solid transparent;
-      font-size: 14px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.3s;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-
-    .nav-tab.active {
-      color: #22d3ee;
-      border-bottom-color: #22d3ee;
-    }
-
     .content {
       padding: 0 20px;
     }
@@ -144,7 +116,6 @@
       font-size: 20px;
     }
 
-    /* Leaderboard Styles */
     .leaderboard-item {
       background: rgba(255, 255, 255, 0.05);
       border-radius: 12px;
@@ -194,6 +165,110 @@
       font-size: 20px;
       font-weight: 700;
       color: #22d3ee;
+    }
+
+    .task-item {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      padding: 16px 20px;
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .task-item:active {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .task-title {
+      font-size: 16px;
+      font-weight: 500;
+      color: #ffffff;
+    }
+
+    .task-arrow {
+      color: #22d3ee;
+      font-size: 20px;
+    }
+
+    .action-buttons {
+      display: flex;
+      gap: 12px;
+      margin-top: 32px;
+      margin-bottom: 32px;
+    }
+
+    .action-button {
+      flex: 1;
+      padding: 18px;
+      border: none;
+      border-radius: 16px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s, opacity 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .action-button:active {
+      transform: scale(0.98);
+      opacity: 0.9;
+    }
+
+    .primary-button {
+      background: linear-gradient(135deg, #22d3ee 0%, #06b6d4 100%);
+      color: #0a1628;
+      box-shadow: 0 4px 12px rgba(34, 211, 238, 0.3);
+    }
+
+    .secondary-button {
+      background: rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(10, 22, 40, 0.95);
+      backdrop-filter: blur(10px);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      justify-content: space-around;
+      padding: 12px 0 20px;
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      background: none;
+      border: none;
+      color: rgba(255, 255, 255, 0.5);
+      cursor: pointer;
+      padding: 8px 20px;
+      transition: color 0.3s;
+    }
+
+    .nav-item.active {
+      color: #22d3ee;
+    }
+
+    .nav-item .icon {
+      font-size: 24px;
+    }
+
+    .nav-item .label {
+      font-size: 12px;
     }
 
     /* Balance Card */
@@ -316,34 +391,6 @@
       color: #ef4444;
     }
 
-    /* Task List */
-    .task-item {
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 16px;
-      padding: 16px 20px;
-      margin-bottom: 12px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-
-    .task-item:active {
-      background: rgba(255, 255, 255, 0.1);
-    }
-
-    .task-title {
-      font-size: 16px;
-      font-weight: 500;
-      color: #ffffff;
-    }
-
-    .task-arrow {
-      color: #22d3ee;
-      font-size: 20px;
-    }
-
     /* Rewards */
     .reward-card {
       background: rgba(255, 255, 255, 0.05);
@@ -422,81 +469,95 @@
       font-size: 20px;
     }
 
-    /* Bottom Navigation */
-    .bottom-nav {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: rgba(10, 22, 40, 0.95);
-      backdrop-filter: blur(10px);
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-      display: flex;
-      justify-content: space-around;
-      padding: 12px 0 20px;
-    }
-
-    .nav-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 4px;
-      background: none;
-      border: none;
-      color: rgba(255, 255, 255, 0.5);
-      cursor: pointer;
-      padding: 8px 20px;
-      transition: color 0.3s;
-    }
-
-    .nav-item.active {
-      color: #22d3ee;
-    }
-
-    .nav-item .icon {
-      font-size: 24px;
-    }
-
-    .nav-item .label {
-      font-size: 12px;
-    }
-
     .hidden {
       display: none;
     }
 
-    /* Ask for Help Button */
-    .ask-help-section {
-      margin-top: 32px;
-      margin-bottom: 32px;
-      padding: 0 20px;
-    }
-
-    .ask-help-button {
-      width: 100%;
-      padding: 18px;
-      background: linear-gradient(135deg, #22d3ee 0%, #06b6d4 100%);
-      color: #0a1628;
-      border: none;
-      border-radius: 16px;
-      font-size: 18px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: transform 0.2s, opacity 0.3s;
-      display: flex;
+    /* Modal styles */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.8);
+      z-index: 1000;
       align-items: center;
       justify-content: center;
-      gap: 10px;
-      box-shadow: 0 4px 12px rgba(34, 211, 238, 0.3);
+      padding: 20px;
     }
 
-    .ask-help-button:active {
-      transform: scale(0.98);
-      opacity: 0.9;
+    .modal.show {
+      display: flex;
     }
 
-    .ask-help-icon {
-      font-size: 24px;
+    .modal-content {
+      background: rgba(26, 39, 68, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 24px;
+      padding: 32px;
+      max-width: 400px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .modal-icon {
+      font-size: 64px;
+      margin-bottom: 16px;
+    }
+
+    .modal-title {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .modal-description {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 15px;
+      line-height: 1.5;
+      margin-bottom: 24px;
+    }
+
+    .invite-link {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 20px;
+      word-break: break-all;
+      font-size: 13px;
+      color: #22d3ee;
+    }
+
+    .modal-buttons {
+      display: flex;
+      gap: 12px;
+    }
+
+    .modal-button {
+      flex: 1;
+      padding: 14px;
+      border: none;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.3s;
+    }
+
+    .modal-button:active {
+      opacity: 0.8;
+    }
+
+    .modal-button.primary {
+      background: linear-gradient(135deg, #22d3ee 0%, #06b6d4 100%);
+      color: #0a1628;
+    }
+
+    .modal-button.secondary {
+      background: rgba(255, 255, 255, 0.1);
+      color: #ffffff;
     }
   </style>
 </head>
@@ -525,10 +586,10 @@
     <div class="leaderboard-item">
       <div class="rank" style="background: linear-gradient(135deg, #9333ea, #7e22ce); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">💜</div>
       <div class="user-avatar">
-        <img src="angle_avatar.png" alt="Sarah Garcia">
+        <img src="angle_avatar.png" alt="Sarah Gracia">
       </div>
       <div class="user-details">
-        <div class="name">Sarah Garcia</div>
+        <div class="name">Sarah Gracia</div>
       </div>
       <div class="score">+40</div>
     </div>
@@ -536,10 +597,10 @@
     <div class="leaderboard-item">
       <div class="rank" style="background: linear-gradient(135deg, #1e40af, #1e3a8a); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">💙</div>
       <div class="user-avatar">
-        <img src="buddy_avatar.jpg" alt="Mo fatih">
+        <img src="buddy_avatar.jpg" alt="Omar Haj">
       </div>
       <div class="user-details">
-        <div class="name">Mo fatih</div>
+        <div class="name">Omar Haj</div>
       </div>
       <div class="score">+29</div>
     </div>
@@ -585,10 +646,14 @@
       <div class="task-arrow">›</div>
     </div>
 
-    <div class="ask-help-section">
-      <button class="ask-help-button" onclick="askForHelp()">
-        <span class="ask-help-icon">🙋</span>
+    <div class="action-buttons">
+      <button class="action-button primary-button" onclick="askForHelp()">
+        <span>🙋</span>
         <span>Ask for Help</span>
+      </button>
+      <button class="action-button secondary-button" onclick="generateInviteLink()">
+        <span>👥</span>
+        <span>Invite Neighbour</span>
       </button>
     </div>
   </div>
@@ -727,6 +792,28 @@
     </div>
   </div>
 
+  <!-- Invite Modal -->
+  <div id="inviteModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-icon">🎁</div>
+      <div class="modal-title">Invite a Neighbour</div>
+      <div class="modal-description">
+        Share this link with someone who has a Neighbourly NFT badge. They'll be able to join the community!
+      </div>
+      <div class="invite-link" id="inviteLinkText">
+        Generating link...
+      </div>
+      <div class="modal-buttons">
+        <button class="modal-button primary" onclick="shareInviteLink()">
+          Share Link
+        </button>
+        <button class="modal-button secondary" onclick="closeInviteModal()">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+
   <div class="bottom-nav">
     <button class="nav-item active" onclick="switchView('home')">
       <span class="icon">🏠</span>
@@ -743,8 +830,9 @@
   </div>
 
   <script>
-    // Check if we're in Telegram environment
     const tg = window.Telegram?.WebApp || null;
+    let currentUserId = null;
+    let currentInviteLink = '';
     
     if (tg) {
       tg.ready();
@@ -752,6 +840,7 @@
       
       const user = tg.initDataUnsafe?.user;
       if (user) {
+        currentUserId = user.id;
         document.getElementById('userName').textContent = user.first_name || 'Neighbour';
       }
     }
@@ -759,8 +848,11 @@
     function switchView(view) {
       // Hide all views
       document.getElementById('homeView').classList.add('hidden');
-      document.getElementById('walletView').classList.add('hidden');
-      document.getElementById('rewardsView').classList.add('hidden');
+      const walletView = document.getElementById('walletView');
+      const rewardsView = document.getElementById('rewardsView');
+      
+      if (walletView) walletView.classList.add('hidden');
+      if (rewardsView) rewardsView.classList.add('hidden');
       
       // Remove active from all nav items
       document.querySelectorAll('.nav-item').forEach(item => {
@@ -772,19 +864,15 @@
         document.getElementById('homeView').classList.remove('hidden');
         document.querySelectorAll('.nav-item')[0].classList.add('active');
       } else if (view === 'wallet') {
-        document.getElementById('walletView').classList.remove('hidden');
+        if (walletView) {
+          walletView.classList.remove('hidden');
+        }
         document.querySelectorAll('.nav-item')[1].classList.add('active');
       } else if (view === 'rewards') {
-        document.getElementById('rewardsView').classList.remove('hidden');
+        if (rewardsView) {
+          rewardsView.classList.remove('hidden');
+        }
         document.querySelectorAll('.nav-item')[2].classList.add('active');
-      }
-    }
-
-    function showTaskDetail(taskName) {
-      if (tg && tg.showAlert) {
-        tg.showAlert(`Task: ${taskName}\n\nIn the full app, you'll be able to accept this task and earn Time Credits!`);
-      } else {
-        alert(`Task: ${taskName}\n\nIn the full app, you'll be able to accept this task and earn Time Credits!`);
       }
     }
 
@@ -796,12 +884,76 @@
       }
     }
 
+    function showTaskDetail(taskName) {
+      if (tg && tg.showAlert) {
+        tg.showAlert(`Task: ${taskName}\n\nIn the full app, you'll be able to accept this task and earn Time Credits!`);
+      } else {
+        alert(`Task: ${taskName}\n\nIn the full app, you'll be able to accept this task and earn Time Credits!`);
+      }
+    }
+
     function askForHelp() {
       if (tg && tg.showAlert) {
         tg.showAlert(`Ask for Help\n\nIn the full app, you'll be able to post your own help request and other community members can assist you!`);
       } else {
         alert(`Ask for Help\n\nIn the full app, you'll be able to post your own help request and other community members can assist you!`);
       }
+    }
+
+    async function generateInviteLink() {
+      const modal = document.getElementById('inviteModal');
+      const linkText = document.getElementById('inviteLinkText');
+      
+      modal.classList.add('show');
+      linkText.textContent = 'Generating link...';
+
+      try {
+        // Generate unique invite link
+        const inviteCode = generateInviteCode();
+        const botUsername = 'YOUR_BOT_USERNAME'; // Replace with your bot username
+        
+        // Create Telegram deep link that opens the bot
+        currentInviteLink = `https://t.me/${botUsername}?start=invite_${inviteCode}`;
+        
+        linkText.textContent = currentInviteLink;
+
+        // Optionally save the invite to backend
+        // await saveInvite(currentUserId, inviteCode);
+      } catch (error) {
+        console.error('Error generating invite:', error);
+        linkText.textContent = 'Error generating link. Please try again.';
+      }
+    }
+
+    function generateInviteCode() {
+      // Generate a unique code (you can make this more sophisticated)
+      const timestamp = Date.now().toString(36);
+      const random = Math.random().toString(36).substring(2, 7);
+      return `${timestamp}${random}`;
+    }
+
+    function shareInviteLink() {
+      if (tg && tg.openTelegramLink) {
+        // Share via Telegram
+        const shareText = encodeURIComponent(`Join our Neighbourly community! 🏡\n\n${currentInviteLink}`);
+        tg.openTelegramLink(`https://t.me/share/url?url=${encodeURIComponent(currentInviteLink)}&text=${shareText}`);
+      } else if (navigator.share) {
+        // Use Web Share API
+        navigator.share({
+          title: 'Join Neighbourly',
+          text: 'Join our Neighbourly community! 🏡',
+          url: currentInviteLink
+        });
+      } else {
+        // Fallback: Copy to clipboard
+        navigator.clipboard.writeText(currentInviteLink).then(() => {
+          alert('Link copied to clipboard!');
+        });
+      }
+    }
+
+    function closeInviteModal() {
+      document.getElementById('inviteModal').classList.remove('show');
     }
   </script>
 </body>
