@@ -1,10 +1,501 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Neighbourly Mini App</title>
-  </head>
-  <body>
-    <h1>Hello from Neighbourly 👋</h1>
-    <p>Your Telegram Mini App is live!</p>
-  </body>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Neighbourly - Time Banking Community</title>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--tg-theme-bg-color, #ffffff);
+      color: var(--tg-theme-text-color, #000000);
+      padding: 16px;
+      padding-bottom: 80px;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 24px;
+      padding: 20px 0;
+    }
+
+    .logo {
+      font-size: 48px;
+      margin-bottom: 8px;
+    }
+
+    h1 {
+      font-size: 24px;
+      margin-bottom: 8px;
+      color: var(--tg-theme-text-color);
+    }
+
+    .subtitle {
+      color: var(--tg-theme-hint-color, #999);
+      font-size: 14px;
+    }
+
+    .balance-card {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 24px;
+      color: white;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    .balance-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .balance-label {
+      font-size: 14px;
+      opacity: 0.9;
+    }
+
+    .balance-value {
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .reputation {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .tab {
+      padding: 10px 20px;
+      border-radius: 20px;
+      border: 2px solid var(--tg-theme-button-color, #3390ec);
+      background: transparent;
+      color: var(--tg-theme-button-color, #3390ec);
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.3s;
+    }
+
+    .tab.active {
+      background: var(--tg-theme-button-color, #3390ec);
+      color: var(--tg-theme-button-text-color, #ffffff);
+    }
+
+    .content {
+      margin-bottom: 20px;
+    }
+
+    .card {
+      background: var(--tg-theme-secondary-bg-color, #f0f0f0);
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 12px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      margin-bottom: 8px;
+    }
+
+    .card-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--tg-theme-text-color);
+    }
+
+    .card-badge {
+      background: var(--tg-theme-button-color, #3390ec);
+      color: white;
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    .card-meta {
+      font-size: 12px;
+      color: var(--tg-theme-hint-color, #999);
+      margin-bottom: 8px;
+    }
+
+    .card-description {
+      font-size: 14px;
+      color: var(--tg-theme-text-color);
+      margin-bottom: 12px;
+      line-height: 1.4;
+    }
+
+    .card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 8px;
+      border-top: 1px solid var(--tg-theme-hint-color, #e0e0e0);
+    }
+
+    .card-info {
+      display: flex;
+      gap: 12px;
+      font-size: 12px;
+      color: var(--tg-theme-hint-color);
+    }
+
+    .btn {
+      padding: 10px 24px;
+      border-radius: 8px;
+      border: none;
+      background: var(--tg-theme-button-color, #3390ec);
+      color: var(--tg-theme-button-text-color, #ffffff);
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: opacity 0.3s;
+    }
+
+    .btn:active {
+      opacity: 0.8;
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--tg-theme-button-color, #3390ec);
+      border: 2px solid var(--tg-theme-button-color, #3390ec);
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--tg-theme-hint-color, #999);
+    }
+
+    .empty-state-icon {
+      font-size: 48px;
+      margin-bottom: 12px;
+    }
+
+    .leaderboard-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
+      background: var(--tg-theme-secondary-bg-color, #f0f0f0);
+      border-radius: 8px;
+      margin-bottom: 8px;
+    }
+
+    .rank {
+      font-size: 20px;
+      font-weight: bold;
+      min-width: 40px;
+    }
+
+    .user-info {
+      flex: 1;
+    }
+
+    .username {
+      font-weight: 600;
+      color: var(--tg-theme-text-color);
+    }
+
+    .stats {
+      display: flex;
+      gap: 12px;
+      font-size: 12px;
+      color: var(--tg-theme-hint-color);
+    }
+
+    .loading {
+      text-align: center;
+      padding: 40px;
+      color: var(--tg-theme-hint-color);
+    }
+
+    .wallet-connect {
+      background: var(--tg-theme-secondary-bg-color, #f0f0f0);
+      border-radius: 12px;
+      padding: 16px;
+      margin-top: 16px;
+      text-align: center;
+    }
+
+    .wallet-info {
+      font-size: 12px;
+      color: var(--tg-theme-hint-color);
+      margin-top: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="logo">🏡</div>
+    <h1>Neighbourly</h1>
+    <div class="subtitle">Time Banking Community</div>
+  </div>
+
+  <div class="balance-card">
+    <div class="balance-row">
+      <span class="balance-label">Time Credits</span>
+      <span class="balance-value" id="credits">5</span>
+    </div>
+    <div class="reputation">
+      <span class="balance-label">⭐ Reputation:</span>
+      <span style="font-size: 20px; font-weight: bold;" id="reputation">0</span>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" data-tab="offers">📢 Offers</button>
+    <button class="tab" data-tab="requests">🙋 Requests</button>
+    <button class="tab" data-tab="leaderboard">🏆 Leaders</button>
+    <button class="tab" data-tab="wallet">💳 Wallet</button>
+  </div>
+
+  <div id="content" class="content">
+    <div class="loading">Loading...</div>
+  </div>
+
+  <script>
+    // Check if we're in Telegram environment
+    const tg = window.Telegram?.WebApp || null;
+    
+    if (tg) {
+      tg.ready();
+      tg.expand();
+    }
+
+    const user = tg?.initDataUnsafe?.user || { first_name: 'Guest' };
+    let currentTab = 'offers';
+
+    // Mock data (in production, fetch from your API)
+    const mockData = {
+      user: {
+        credits: 5,
+        reputation: 0,
+        wallet: null
+      },
+      offers: [
+        {
+          id: 1,
+          skill: 'Web Design',
+          description: 'I can help create modern, responsive websites using React and Tailwind',
+          username: 'alex_designer',
+          hours: 2,
+          status: 'available'
+        },
+        {
+          id: 2,
+          skill: 'Marketing Strategy',
+          description: 'Social media marketing and content strategy for startups',
+          username: 'sarah_marketing',
+          hours: 1,
+          status: 'available'
+        },
+        {
+          id: 3,
+          skill: 'Python Tutoring',
+          description: 'Beginner-friendly Python lessons for data science and automation',
+          username: 'mike_coder',
+          hours: 1,
+          status: 'available'
+        }
+      ],
+      requests: [
+        {
+          id: 1,
+          need: 'Logo Design',
+          description: 'Need a modern logo for my new podcast about urban gardening',
+          username: 'emma_podcaster',
+          hours: 2,
+          status: 'open'
+        },
+        {
+          id: 2,
+          need: 'Video Editing',
+          description: 'Help editing a 5-minute promotional video for a community event',
+          username: 'john_organizer',
+          hours: 3,
+          status: 'open'
+        }
+      ],
+      leaderboard: [
+        { username: 'alex_designer', credits: 12, reputation: 8 },
+        { username: 'sarah_marketing', credits: 10, reputation: 7 },
+        { username: 'mike_coder', credits: 8, reputation: 5 },
+        { username: 'emma_podcaster', credits: 7, reputation: 4 },
+        { username: 'john_organizer', credits: 5, reputation: 3 }
+      ]
+    };
+
+    // Update balance
+    document.getElementById('credits').textContent = mockData.user.credits;
+    document.getElementById('reputation').textContent = mockData.user.reputation;
+
+    // Tab switching
+    document.querySelectorAll('.tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        currentTab = tab.dataset.tab;
+        renderContent();
+      });
+    });
+
+    function renderContent() {
+      const content = document.getElementById('content');
+      
+      switch(currentTab) {
+        case 'offers':
+          content.innerHTML = mockData.offers.map(offer => `
+            <div class="card">
+              <div class="card-header">
+                <div class="card-title">${offer.skill}</div>
+                <div class="card-badge">${offer.hours}h</div>
+              </div>
+              <div class="card-meta">by @${offer.username}</div>
+              <div class="card-description">${offer.description}</div>
+              <div class="card-footer">
+                <div class="card-info">
+                  <span>🪙 ${offer.hours} credits</span>
+                </div>
+                <button class="btn" onclick="acceptOffer(${offer.id})">Accept</button>
+              </div>
+            </div>
+          `).join('');
+          break;
+
+        case 'requests':
+          content.innerHTML = mockData.requests.map(req => `
+            <div class="card">
+              <div class="card-header">
+                <div class="card-title">${req.need}</div>
+                <div class="card-badge">${req.hours}h</div>
+              </div>
+              <div class="card-meta">by @${req.username}</div>
+              <div class="card-description">${req.description}</div>
+              <div class="card-footer">
+                <div class="card-info">
+                  <span>🪙 ${req.hours} credits</span>
+                </div>
+                <button class="btn" onclick="offerHelp(${req.id})">Offer Help</button>
+              </div>
+            </div>
+          `).join('');
+          break;
+
+        case 'leaderboard':
+          content.innerHTML = mockData.leaderboard.map((user, index) => {
+            const medal = index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : `${index + 1}.`;
+            return `
+              <div class="leaderboard-item">
+                <div class="rank">${medal}</div>
+                <div class="user-info">
+                  <div class="username">@${user.username}</div>
+                  <div class="stats">
+                    <span>⭐ ${user.reputation}</span>
+                    <span>🪙 ${user.credits}</span>
+                  </div>
+                </div>
+              </div>
+            `;
+          }).join('');
+          break;
+
+        case 'wallet':
+          content.innerHTML = `
+            <div class="wallet-connect">
+              <h3 style="margin-bottom: 16px;">TON Wallet</h3>
+              ${mockData.user.wallet ? `
+                <div style="margin-bottom: 16px;">
+                  <div style="color: var(--tg-theme-hint-color); font-size: 12px; margin-bottom: 4px;">Connected Wallet</div>
+                  <code style="font-size: 12px;">${mockData.user.wallet}</code>
+                </div>
+                <button class="btn btn-secondary">Disconnect</button>
+              ` : `
+                <p style="margin-bottom: 16px; color: var(--tg-theme-hint-color);">
+                  Connect your TON wallet to receive real Time Credits (Jettons) in the future
+                </p>
+                <button class="btn" onclick="connectWallet()">Connect Wallet</button>
+                <div class="wallet-info">
+                  🔒 Secure connection via TON Connect
+                </div>
+              `}
+            </div>
+            
+            <div class="card" style="margin-top: 16px;">
+              <h3 style="margin-bottom: 12px;">About Time Credits</h3>
+              <p style="color: var(--tg-theme-hint-color); font-size: 14px; line-height: 1.6;">
+                Time Credits are our community currency. Earn them by helping others, 
+                spend them to get help. Currently simulated, but soon they'll be real 
+                Jettons on the TON blockchain!
+              </p>
+            </div>
+          `;
+          break;
+      }
+    }
+
+    window.acceptOffer = function(offerId) {
+      if (tg && tg.showAlert) {
+        tg.showAlert(`Accepting offer #${offerId}. In the full app, this will create a transaction and notify both parties!`);
+      } else {
+        alert(`Accepting offer #${offerId}. In the full app, this will create a transaction and notify both parties!`);
+      }
+    };
+
+    window.offerHelp = function(requestId) {
+      if (tg && tg.showAlert) {
+        tg.showAlert(`Offering help for request #${requestId}. The requester will be notified!`);
+      } else {
+        alert(`Offering help for request #${requestId}. The requester will be notified!`);
+      }
+    };
+
+    window.connectWallet = function() {
+      if (tg && tg.showAlert) {
+        tg.showAlert('TON Connect integration coming soon! This will allow you to link your real TON wallet.');
+      } else {
+        alert('TON Connect integration coming soon! This will allow you to link your real TON wallet.');
+      }
+    };
+
+    // Initial render
+    renderContent();
+
+    // Configure main button (only if in Telegram)
+    if (tg && tg.MainButton) {
+      tg.MainButton.setText('Create Offer');
+      tg.MainButton.onClick(() => {
+        tg.showPopup({
+          title: 'Create Offer',
+          message: 'Use the bot commands to create offers and requests:\n\n/offer [skill] - [description]\n/request [need] - [description]',
+          buttons: [{type: 'close'}]
+        });
+      });
+      tg.MainButton.show();
+    }
+  </script>
+</body>
 </html>
