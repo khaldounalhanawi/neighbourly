@@ -14,267 +14,642 @@
 
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: var(--tg-theme-bg-color, #ffffff);
-      color: var(--tg-theme-text-color, #000000);
-      padding: 16px;
+      background: linear-gradient(180deg, #0a1628 0%, #1a2332 100%);
+      color: #ffffff;
+      min-height: 100vh;
       padding-bottom: 80px;
     }
 
     .header {
-      text-align: center;
-      margin-bottom: 24px;
-      padding: 20px 0;
-    }
-
-    .logo {
-      font-size: 48px;
-      margin-bottom: 8px;
-    }
-
-    h1 {
-      font-size: 24px;
-      margin-bottom: 8px;
-      color: var(--tg-theme-text-color);
-    }
-
-    .subtitle {
-      color: var(--tg-theme-hint-color, #999);
-      font-size: 14px;
-    }
-
-    .balance-card {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      border-radius: 16px;
-      padding: 24px;
-      margin-bottom: 24px;
-      color: white;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    }
-
-    .balance-row {
+      padding: 20px 20px 10px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 12px;
     }
 
-    .balance-label {
+    .user-info {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+    }
+
+    .user-name {
+      font-size: 18px;
+      font-weight: 600;
+      color: #ffffff;
+    }
+
+    .user-role {
       font-size: 14px;
-      opacity: 0.9;
+      color: #22d3ee;
     }
 
-    .balance-value {
-      font-size: 28px;
-      font-weight: bold;
-    }
-
-    .reputation {
+    .avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       display: flex;
       align-items: center;
-      gap: 8px;
+      justify-content: center;
+      font-size: 24px;
     }
 
-    .tabs {
+    .app-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
       display: flex;
-      gap: 8px;
-      margin-bottom: 16px;
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
     }
 
-    .tab {
-      padding: 10px 20px;
-      border-radius: 20px;
-      border: 2px solid var(--tg-theme-button-color, #3390ec);
-      background: transparent;
-      color: var(--tg-theme-button-color, #3390ec);
+    .nav-tabs {
+      display: flex;
+      justify-content: space-around;
+      padding: 0 20px;
+      margin: 20px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .nav-tab {
+      padding: 12px 0;
+      color: rgba(255, 255, 255, 0.5);
+      background: none;
+      border: none;
+      border-bottom: 3px solid transparent;
       font-size: 14px;
       font-weight: 500;
       cursor: pointer;
-      white-space: nowrap;
       transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 4px;
     }
 
-    .tab.active {
-      background: var(--tg-theme-button-color, #3390ec);
-      color: var(--tg-theme-button-text-color, #ffffff);
+    .nav-tab.active {
+      color: #22d3ee;
+      border-bottom-color: #22d3ee;
     }
 
     .content {
-      margin-bottom: 20px;
+      padding: 0 20px;
     }
 
-    .card {
-      background: var(--tg-theme-secondary-bg-color, #f0f0f0);
-      border-radius: 12px;
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 16px;
+      color: #ffffff;
+    }
+
+    .section-icon {
+      font-size: 24px;
+    }
+
+    /* Leaderboard Styles */
+    .leaderboard-item {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
       padding: 16px;
       margin-bottom: 12px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-    }
-
-    .card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: start;
-      margin-bottom: 8px;
-    }
-
-    .card-title {
-      font-size: 16px;
-      font-weight: 600;
-      color: var(--tg-theme-text-color);
-    }
-
-    .card-badge {
-      background: var(--tg-theme-button-color, #3390ec);
-      color: white;
-      padding: 4px 12px;
-      border-radius: 12px;
-      font-size: 12px;
-      font-weight: 500;
-    }
-
-    .card-meta {
-      font-size: 12px;
-      color: var(--tg-theme-hint-color, #999);
-      margin-bottom: 8px;
-    }
-
-    .card-description {
-      font-size: 14px;
-      color: var(--tg-theme-text-color);
-      margin-bottom: 12px;
-      line-height: 1.4;
-    }
-
-    .card-footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding-top: 8px;
-      border-top: 1px solid var(--tg-theme-hint-color, #e0e0e0);
-    }
-
-    .card-info {
-      display: flex;
-      gap: 12px;
-      font-size: 12px;
-      color: var(--tg-theme-hint-color);
-    }
-
-    .btn {
-      padding: 10px 24px;
-      border-radius: 8px;
-      border: none;
-      background: var(--tg-theme-button-color, #3390ec);
-      color: var(--tg-theme-button-text-color, #ffffff);
-      font-size: 14px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: opacity 0.3s;
-    }
-
-    .btn:active {
-      opacity: 0.8;
-    }
-
-    .btn-secondary {
-      background: transparent;
-      color: var(--tg-theme-button-color, #3390ec);
-      border: 2px solid var(--tg-theme-button-color, #3390ec);
-    }
-
-    .empty-state {
-      text-align: center;
-      padding: 40px 20px;
-      color: var(--tg-theme-hint-color, #999);
-    }
-
-    .empty-state-icon {
-      font-size: 48px;
-      margin-bottom: 12px;
-    }
-
-    .leaderboard-item {
       display: flex;
       align-items: center;
-      gap: 12px;
-      padding: 12px;
-      background: var(--tg-theme-secondary-bg-color, #f0f0f0);
-      border-radius: 8px;
-      margin-bottom: 8px;
+      gap: 16px;
     }
 
     .rank {
       font-size: 20px;
       font-weight: bold;
+      color: #22d3ee;
       min-width: 40px;
     }
 
-    .user-info {
+    .user-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: bold;
+      color: white;
+    }
+
+    .user-details {
       flex: 1;
     }
 
-    .username {
+    .user-details .name {
+      font-size: 16px;
       font-weight: 600;
-      color: var(--tg-theme-text-color);
+      color: #ffffff;
+      margin-bottom: 4px;
     }
 
-    .stats {
+    .score {
+      font-size: 24px;
+      font-weight: bold;
+      color: #22d3ee;
+    }
+
+    /* Balance Card */
+    .balance-card {
+      background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
+      border-radius: 20px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+
+    .balance-header {
       display: flex;
-      gap: 12px;
-      font-size: 12px;
-      color: var(--tg-theme-hint-color);
+      align-items: center;
+      gap: 10px;
+      font-size: 16px;
+      opacity: 0.9;
+      margin-bottom: 12px;
     }
 
-    .loading {
-      text-align: center;
-      padding: 40px;
-      color: var(--tg-theme-hint-color);
+    .balance-amount {
+      font-size: 48px;
+      font-weight: bold;
+      margin-bottom: 16px;
     }
 
-    .wallet-connect {
-      background: var(--tg-theme-secondary-bg-color, #f0f0f0);
+    .balance-change {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 16px;
+    }
+
+    .badge-section {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 24px;
+    }
+
+    .badge-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .badge-title {
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .badge-level {
+      background: rgba(34, 211, 238, 0.2);
+      color: #22d3ee;
+      padding: 6px 16px;
       border-radius: 12px;
-      padding: 16px;
-      margin-top: 16px;
-      text-align: center;
+      font-size: 14px;
+      font-weight: 600;
     }
 
-    .wallet-info {
+    .badge-progress {
+      margin-top: 12px;
+    }
+
+    .progress-label {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.7);
+      margin-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .progress-bar {
+      height: 8px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #22d3ee 0%, #06b6d4 100%);
+      border-radius: 4px;
+      transition: width 0.3s;
+    }
+
+    /* Activity List */
+    .activity-item {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      padding: 16px;
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .activity-info .title {
+      font-size: 16px;
+      font-weight: 600;
+      color: #ffffff;
+      margin-bottom: 4px;
+    }
+
+    .activity-info .time {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    .activity-points {
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .points-positive {
+      color: #10b981;
+    }
+
+    .points-negative {
+      color: #ef4444;
+    }
+
+    /* Task List */
+    .task-item {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      padding: 16px 20px;
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .task-item:active {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .task-title {
+      font-size: 16px;
+      font-weight: 500;
+      color: #ffffff;
+    }
+
+    .task-arrow {
+      color: #22d3ee;
+      font-size: 20px;
+    }
+
+    /* Rewards */
+    .reward-card {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+
+    .reward-header {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .reward-icon {
+      width: 60px;
+      height: 60px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      flex-shrink: 0;
+    }
+
+    .reward-info {
+      flex: 1;
+    }
+
+    .reward-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: #ffffff;
+      margin-bottom: 6px;
+    }
+
+    .reward-description {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.6);
+      line-height: 1.4;
+    }
+
+    .reward-requirement {
+      display: inline-block;
+      background: rgba(34, 211, 238, 0.2);
+      color: #22d3ee;
+      padding: 6px 12px;
+      border-radius: 8px;
       font-size: 12px;
-      color: var(--tg-theme-hint-color);
+      font-weight: 600;
       margin-top: 8px;
+    }
+
+    .reward-button {
+      width: 100%;
+      padding: 14px;
+      background: #22d3ee;
+      color: #0a1628;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.3s;
+    }
+
+    .reward-button:active {
+      opacity: 0.8;
+    }
+
+    .reward-lock {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      color: rgba(255, 255, 255, 0.3);
+      font-size: 20px;
+    }
+
+    /* Bottom Navigation */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(10, 22, 40, 0.95);
+      backdrop-filter: blur(10px);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      justify-content: space-around;
+      padding: 12px 0 20px;
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      background: none;
+      border: none;
+      color: rgba(255, 255, 255, 0.5);
+      cursor: pointer;
+      padding: 8px 20px;
+      transition: color 0.3s;
+    }
+
+    .nav-item.active {
+      color: #22d3ee;
+    }
+
+    .nav-item .icon {
+      font-size: 24px;
+    }
+
+    .nav-item .label {
+      font-size: 12px;
+    }
+
+    .hidden {
+      display: none;
     }
   </style>
 </head>
 <body>
   <div class="header">
-    <div class="logo">🏡</div>
-    <h1>Neighbourly</h1>
-    <div class="subtitle">Time Banking Community</div>
-  </div>
-
-  <div class="balance-card">
-    <div class="balance-row">
-      <span class="balance-label">Time Credits</span>
-      <span class="balance-value" id="credits">5</span>
+    <div class="avatar">🏡</div>
+    <div class="user-info">
+      <div class="user-name" id="userName">Alex Builder</div>
+      <div class="user-role">Neighbour</div>
     </div>
-    <div class="reputation">
-      <span class="balance-label">⭐ Reputation:</span>
-      <span style="font-size: 20px; font-weight: bold;" id="reputation">0</span>
+    <div class="app-icon">🎨</div>
+  </div>
+
+  <div id="homeView" class="content">
+    <h2 class="section-title">
+      <span class="section-icon">🏆</span>
+      Top Neighbors
+    </h2>
+
+    <div class="leaderboard-item">
+      <div class="rank">#1</div>
+      <div class="user-avatar" style="background: linear-gradient(135deg, #06b6d4, #0891b2);">SA</div>
+      <div class="user-details">
+        <div class="name">Sarah Green</div>
+      </div>
+      <div class="score">1250</div>
+    </div>
+
+    <div class="leaderboard-item">
+      <div class="rank">#2</div>
+      <div class="user-avatar" style="background: linear-gradient(135deg, #3b82f6, #2563eb);">MI</div>
+      <div class="user-details">
+        <div class="name">Mike Stone</div>
+      </div>
+      <div class="score">980</div>
+    </div>
+
+    <div class="leaderboard-item">
+      <div class="rank">#3</div>
+      <div class="user-avatar" style="background: linear-gradient(135deg, #06b6d4, #0891b2);">EM</div>
+      <div class="user-details">
+        <div class="name">Emma Wood</div>
+      </div>
+      <div class="score">750</div>
+    </div>
+
+    <h2 class="section-title" style="margin-top: 32px;">
+      <span class="section-icon">📋</span>
+      Available Tasks
+    </h2>
+
+    <div class="task-item" onclick="showTaskDetail('Website Design')">
+      <div class="task-title">website design</div>
+      <div class="task-arrow">›</div>
+    </div>
+
+    <div class="task-item" onclick="showTaskDetail('Community Garden Cleanup')">
+      <div class="task-title">Community garden cleanup</div>
+      <div class="task-arrow">›</div>
+    </div>
+
+    <div class="task-item" onclick="showTaskDetail('Dog Walking')">
+      <div class="task-title">Dog walking - afternoon shift</div>
+      <div class="task-arrow">›</div>
+    </div>
+
+    <div class="task-item" onclick="showTaskDetail('Help Moving Furniture')">
+      <div class="task-title">Help moving furniture</div>
+      <div class="task-arrow">›</div>
+    </div>
+
+    <div class="task-item" onclick="showTaskDetail('Help with Taxes')">
+      <div class="task-title">Help with taxes</div>
+      <div class="task-arrow">›</div>
     </div>
   </div>
 
-  <div class="tabs">
-    <button class="tab active" data-tab="offers">📢 Offers</button>
-    <button class="tab" data-tab="requests">🙋 Requests</button>
-    <button class="tab" data-tab="leaderboard">🏆 Leaders</button>
-    <button class="tab" data-tab="wallet">💳 Wallet</button>
+  <div id="walletView" class="content hidden">
+    <div class="balance-card">
+      <div class="balance-header">
+        <span>💰</span>
+        <span>Total Balance</span>
+      </div>
+      <div class="balance-amount">525 Coins</div>
+      <div class="balance-change">
+        <span>📈</span>
+        <span>+180 this week</span>
+      </div>
+    </div>
+
+    <div class="badge-section">
+      <div class="badge-header">
+        <div class="badge-title">Current Badge</div>
+        <div class="badge-level">Neighbour</div>
+      </div>
+      <div class="badge-progress">
+        <div class="progress-label">
+          <span>Progress to Buddy</span>
+          <span>525/1000</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" style="width: 52.5%;"></div>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="section-title">
+      <span class="section-icon">🎯</span>
+      Recent Activity
+    </h2>
+
+    <div class="activity-item">
+      <div class="activity-info">
+        <div class="title">Grass trimming help</div>
+        <div class="time">2h ago</div>
+      </div>
+      <div class="activity-points points-positive">+50</div>
+    </div>
+
+    <div class="activity-item">
+      <div class="activity-info">
+        <div class="title">Garden cleanup</div>
+        <div class="time">1d ago</div>
+      </div>
+      <div class="activity-points points-positive">+100</div>
+    </div>
+
+    <div class="activity-item">
+      <div class="activity-info">
+        <div class="title">Event ticket</div>
+        <div class="time">2d ago</div>
+      </div>
+      <div class="activity-points points-negative">-75</div>
+    </div>
+
+    <div class="activity-item">
+      <div class="activity-info">
+        <div class="title">Dog walking</div>
+        <div class="time">3d ago</div>
+      </div>
+      <div class="activity-points points-positive">+40</div>
+    </div>
   </div>
 
-  <div id="content" class="content">
-    <div class="loading">Loading...</div>
+  <div id="rewardsView" class="content hidden">
+    <h2 class="section-title">
+      <span class="section-icon">🎁</span>
+      Available Rewards
+    </h2>
+
+    <div class="reward-card" style="position: relative;">
+      <div class="reward-lock">🔒</div>
+      <div class="reward-header">
+        <div class="reward-icon" style="background: linear-gradient(135deg, #9333ea, #7e22ce);">👥</div>
+        <div class="reward-info">
+          <div class="reward-title">Networking Event Access</div>
+          <div class="reward-description">Join exclusive networking events with top community members</div>
+          <span class="reward-requirement">Requires: Buddy</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="reward-card">
+      <div class="reward-header">
+        <div class="reward-icon" style="background: linear-gradient(135deg, #2563eb, #1e40af);">⭐</div>
+        <div class="reward-info">
+          <div class="reward-title">Community Workshop Pass</div>
+          <div class="reward-description">Attend skill-sharing workshops and masterclasses</div>
+          <span class="reward-requirement">Requires: Neighbour</span>
+        </div>
+      </div>
+      <button class="reward-button" onclick="claimReward('Workshop Pass')">Claim Reward</button>
+    </div>
+
+    <div class="reward-card" style="position: relative;">
+      <div class="reward-lock">🔒</div>
+      <div class="reward-header">
+        <div class="reward-icon" style="background: linear-gradient(135deg, #0891b2, #0e7490);">🎁</div>
+        <div class="reward-info">
+          <div class="reward-title">VIP Garden Party Invite</div>
+          <div class="reward-description">Get exclusive access to the annual community garden party</div>
+          <span class="reward-requirement">Requires: Angel</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="reward-card" style="position: relative;">
+      <div class="reward-lock">🔒</div>
+      <div class="reward-header">
+        <div class="reward-icon" style="background: linear-gradient(135deg, #b45309, #92400e);">👥</div>
+        <div class="reward-info">
+          <div class="reward-title">Monthly Community Dinner</div>
+          <div class="reward-description">Free entry to monthly community dinners and socials</div>
+          <span class="reward-requirement">Requires: Buddy</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="reward-card">
+      <div class="reward-header">
+        <div class="reward-icon" style="background: linear-gradient(135deg, #10b981, #059669);">🔄</div>
+        <div class="reward-info">
+          <div class="reward-title">Skill Exchange Program</div>
+          <div class="reward-description">Priority access to skill exchange opportunities</div>
+          <span class="reward-requirement">Requires: Neighbour</span>
+        </div>
+      </div>
+      <button class="reward-button" onclick="claimReward('Skill Exchange')">Claim Reward</button>
+    </div>
+  </div>
+
+  <div class="bottom-nav">
+    <button class="nav-item active" onclick="switchView('home')">
+      <span class="icon">🏠</span>
+      <span class="label">Home</span>
+    </button>
+    <button class="nav-item" onclick="switchView('wallet')">
+      <span class="icon">💳</span>
+      <span class="label">Wallet</span>
+    </button>
+    <button class="nav-item" onclick="switchView('rewards')">
+      <span class="icon">🎁</span>
+      <span class="label">My Rewards</span>
+    </button>
   </div>
 
   <script>
@@ -284,217 +659,51 @@
     if (tg) {
       tg.ready();
       tg.expand();
-    }
-
-    const user = tg?.initDataUnsafe?.user || { first_name: 'Guest' };
-    let currentTab = 'offers';
-
-    // Mock data (in production, fetch from your API)
-    const mockData = {
-      user: {
-        credits: 5,
-        reputation: 0,
-        wallet: null
-      },
-      offers: [
-        {
-          id: 1,
-          skill: 'Web Design',
-          description: 'I can help create modern, responsive websites using React and Tailwind',
-          username: 'alex_designer',
-          hours: 2,
-          status: 'available'
-        },
-        {
-          id: 2,
-          skill: 'Marketing Strategy',
-          description: 'Social media marketing and content strategy for startups',
-          username: 'sarah_marketing',
-          hours: 1,
-          status: 'available'
-        },
-        {
-          id: 3,
-          skill: 'Python Tutoring',
-          description: 'Beginner-friendly Python lessons for data science and automation',
-          username: 'mike_coder',
-          hours: 1,
-          status: 'available'
-        }
-      ],
-      requests: [
-        {
-          id: 1,
-          need: 'Logo Design',
-          description: 'Need a modern logo for my new podcast about urban gardening',
-          username: 'emma_podcaster',
-          hours: 2,
-          status: 'open'
-        },
-        {
-          id: 2,
-          need: 'Video Editing',
-          description: 'Help editing a 5-minute promotional video for a community event',
-          username: 'john_organizer',
-          hours: 3,
-          status: 'open'
-        }
-      ],
-      leaderboard: [
-        { username: 'alex_designer', credits: 12, reputation: 8 },
-        { username: 'sarah_marketing', credits: 10, reputation: 7 },
-        { username: 'mike_coder', credits: 8, reputation: 5 },
-        { username: 'emma_podcaster', credits: 7, reputation: 4 },
-        { username: 'john_organizer', credits: 5, reputation: 3 }
-      ]
-    };
-
-    // Update balance
-    document.getElementById('credits').textContent = mockData.user.credits;
-    document.getElementById('reputation').textContent = mockData.user.reputation;
-
-    // Tab switching
-    document.querySelectorAll('.tab').forEach(tab => {
-      tab.addEventListener('click', () => {
-        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-        tab.classList.add('active');
-        currentTab = tab.dataset.tab;
-        renderContent();
-      });
-    });
-
-    function renderContent() {
-      const content = document.getElementById('content');
       
-      switch(currentTab) {
-        case 'offers':
-          content.innerHTML = mockData.offers.map(offer => `
-            <div class="card">
-              <div class="card-header">
-                <div class="card-title">${offer.skill}</div>
-                <div class="card-badge">${offer.hours}h</div>
-              </div>
-              <div class="card-meta">by @${offer.username}</div>
-              <div class="card-description">${offer.description}</div>
-              <div class="card-footer">
-                <div class="card-info">
-                  <span>🪙 ${offer.hours} credits</span>
-                </div>
-                <button class="btn" onclick="acceptOffer(${offer.id})">Accept</button>
-              </div>
-            </div>
-          `).join('');
-          break;
-
-        case 'requests':
-          content.innerHTML = mockData.requests.map(req => `
-            <div class="card">
-              <div class="card-header">
-                <div class="card-title">${req.need}</div>
-                <div class="card-badge">${req.hours}h</div>
-              </div>
-              <div class="card-meta">by @${req.username}</div>
-              <div class="card-description">${req.description}</div>
-              <div class="card-footer">
-                <div class="card-info">
-                  <span>🪙 ${req.hours} credits</span>
-                </div>
-                <button class="btn" onclick="offerHelp(${req.id})">Offer Help</button>
-              </div>
-            </div>
-          `).join('');
-          break;
-
-        case 'leaderboard':
-          content.innerHTML = mockData.leaderboard.map((user, index) => {
-            const medal = index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : `${index + 1}.`;
-            return `
-              <div class="leaderboard-item">
-                <div class="rank">${medal}</div>
-                <div class="user-info">
-                  <div class="username">@${user.username}</div>
-                  <div class="stats">
-                    <span>⭐ ${user.reputation}</span>
-                    <span>🪙 ${user.credits}</span>
-                  </div>
-                </div>
-              </div>
-            `;
-          }).join('');
-          break;
-
-        case 'wallet':
-          content.innerHTML = `
-            <div class="wallet-connect">
-              <h3 style="margin-bottom: 16px;">TON Wallet</h3>
-              ${mockData.user.wallet ? `
-                <div style="margin-bottom: 16px;">
-                  <div style="color: var(--tg-theme-hint-color); font-size: 12px; margin-bottom: 4px;">Connected Wallet</div>
-                  <code style="font-size: 12px;">${mockData.user.wallet}</code>
-                </div>
-                <button class="btn btn-secondary">Disconnect</button>
-              ` : `
-                <p style="margin-bottom: 16px; color: var(--tg-theme-hint-color);">
-                  Connect your TON wallet to receive real Time Credits (Jettons) in the future
-                </p>
-                <button class="btn" onclick="connectWallet()">Connect Wallet</button>
-                <div class="wallet-info">
-                  🔒 Secure connection via TON Connect
-                </div>
-              `}
-            </div>
-            
-            <div class="card" style="margin-top: 16px;">
-              <h3 style="margin-bottom: 12px;">About Time Credits</h3>
-              <p style="color: var(--tg-theme-hint-color); font-size: 14px; line-height: 1.6;">
-                Time Credits are our community currency. Earn them by helping others, 
-                spend them to get help. Currently simulated, but soon they'll be real 
-                Jettons on the TON blockchain!
-              </p>
-            </div>
-          `;
-          break;
+      const user = tg.initDataUnsafe?.user;
+      if (user) {
+        document.getElementById('userName').textContent = user.first_name || 'Neighbour';
       }
     }
 
-    window.acceptOffer = function(offerId) {
-      if (tg && tg.showAlert) {
-        tg.showAlert(`Accepting offer #${offerId}. In the full app, this will create a transaction and notify both parties!`);
-      } else {
-        alert(`Accepting offer #${offerId}. In the full app, this will create a transaction and notify both parties!`);
-      }
-    };
-
-    window.offerHelp = function(requestId) {
-      if (tg && tg.showAlert) {
-        tg.showAlert(`Offering help for request #${requestId}. The requester will be notified!`);
-      } else {
-        alert(`Offering help for request #${requestId}. The requester will be notified!`);
-      }
-    };
-
-    window.connectWallet = function() {
-      if (tg && tg.showAlert) {
-        tg.showAlert('TON Connect integration coming soon! This will allow you to link your real TON wallet.');
-      } else {
-        alert('TON Connect integration coming soon! This will allow you to link your real TON wallet.');
-      }
-    };
-
-    // Initial render
-    renderContent();
-
-    // Configure main button (only if in Telegram)
-    if (tg && tg.MainButton) {
-      tg.MainButton.setText('Create Offer');
-      tg.MainButton.onClick(() => {
-        tg.showPopup({
-          title: 'Create Offer',
-          message: 'Use the bot commands to create offers and requests:\n\n/offer [skill] - [description]\n/request [need] - [description]',
-          buttons: [{type: 'close'}]
-        });
+    function switchView(view) {
+      // Hide all views
+      document.getElementById('homeView').classList.add('hidden');
+      document.getElementById('walletView').classList.add('hidden');
+      document.getElementById('rewardsView').classList.add('hidden');
+      
+      // Remove active from all nav items
+      document.querySelectorAll('.nav-item').forEach(item => {
+        item.classList.remove('active');
       });
-      tg.MainButton.show();
+      
+      // Show selected view and activate nav item
+      if (view === 'home') {
+        document.getElementById('homeView').classList.remove('hidden');
+        document.querySelectorAll('.nav-item')[0].classList.add('active');
+      } else if (view === 'wallet') {
+        document.getElementById('walletView').classList.remove('hidden');
+        document.querySelectorAll('.nav-item')[1].classList.add('active');
+      } else if (view === 'rewards') {
+        document.getElementById('rewardsView').classList.remove('hidden');
+        document.querySelectorAll('.nav-item')[2].classList.add('active');
+      }
+    }
+
+    function showTaskDetail(taskName) {
+      if (tg && tg.showAlert) {
+        tg.showAlert(`Task: ${taskName}\n\nIn the full app, you'll be able to accept this task and earn Time Credits!`);
+      } else {
+        alert(`Task: ${taskName}\n\nIn the full app, you'll be able to accept this task and earn Time Credits!`);
+      }
+    }
+
+    function claimReward(rewardName) {
+      if (tg && tg.showAlert) {
+        tg.showAlert(`Claiming reward: ${rewardName}\n\nCongratulations! This reward is now yours.`);
+      } else {
+        alert(`Claiming reward: ${rewardName}\n\nCongratulations! This reward is now yours.`);
+      }
     }
   </script>
 </body>
