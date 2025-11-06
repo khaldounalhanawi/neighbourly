@@ -672,10 +672,11 @@
       </div>
     </div>
       <div class="action-buttons">
-      <button class="action-button secondary-button">
+      <button id="connectWalletBtn" class="action-button secondary-button">
         <span>💳</span>
         <span>My Wallet</span>
       </button>
+      <div id="walletAddress" style="margin-top: 12px; color: #22d3ee;"></div>
     </div>
     <div class="badge-section">
       <div class="badge-header">
@@ -965,6 +966,27 @@
     function closeInviteModal() {
       document.getElementById('inviteModal').classList.remove('show');
     }
+    // TON Connect Setup
+const tonConnect = new TonConnect.UI({
+  manifestUrl: 'https://neighbourly-three.vercel.app/tonconnect-manifest.json'
+});
+
+// Wallet button click
+document.getElementById('connectWalletBtn').addEventListener('click', async () => {
+  try {
+    const wallet = await tonConnect.connectWallet();
+    
+    if (wallet?.account) {
+      const address = wallet.account.address;
+      document.getElementById('walletAddress').textContent = `Connected wallet: ${address}`;
+      document.getElementById('connectWalletBtn').textContent = '✅ Wallet Connected';
+    }
+  } catch (error) {
+    console.error('Wallet connection failed:', error);
+    alert('Failed to connect wallet. Make sure you have a TON wallet installed.');
+  }
+});
+
   </script>
 </body>
 </html>
