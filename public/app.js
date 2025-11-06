@@ -23,7 +23,7 @@ document.getElementById("confirmBtn").addEventListener("click", () => {
 
 // --- 👇 TON Connect Integration ---
 const tonConnect = new TON_CONNECT.TonConnect({
-  manifestUrl: 'https://YOUR_DOMAIN/tonconnect-manifest.json' // 🔹 Replace with your own domain
+  manifestUrl: 'https://neighbourly-three.vercel.app/tonconnect-manifest.json' // 🔹 Replace with your own domain
 });
 
 async function connectWallet() {
