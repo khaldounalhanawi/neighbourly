@@ -194,17 +194,18 @@
       font-size: 20px;
     }
 
-    .action-buttons {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      margin-top: 32px;
-      margin-bottom: 32px;
-    }
+.action-buttons {
+  display: flex;
+  flex-direction: column; /* stack vertically */
+  gap: 12px;
+  margin-top: 32px;
+  margin-bottom: 32px;
+}
+
 
     .action-button {
-      width: 100%;
-      padding: 18px 24px;
+      flex: 1;
+      padding: 18px;
       border: none;
       border-radius: 16px;
       font-size: 16px;
@@ -233,6 +234,7 @@
       color: #ffffff;
       border: 2px solid rgba(255, 255, 255, 0.2);
     }
+
 
     .bottom-nav {
       position: fixed;
@@ -272,8 +274,293 @@
       font-size: 12px;
     }
 
+    /* Balance Card */
+    .balance-card {
+      background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
+      border-radius: 20px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+
+    .balance-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 16px;
+      opacity: 0.9;
+      margin-bottom: 12px;
+    }
+
+    .balance-amount {
+      font-size: 48px;
+      font-weight: bold;
+      margin-bottom: 16px;
+    }
+
+    .balance-change {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 16px;
+    }
+
+    .badge-section {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 24px;
+    }
+
+    .badge-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .badge-title {
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .badge-level {
+      background: rgba(34, 211, 238, 0.2);
+      color: #22d3ee;
+      padding: 6px 16px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .badge-progress {
+      margin-top: 12px;
+    }
+
+    .progress-label {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.7);
+      margin-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .progress-bar {
+      height: 8px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #22d3ee 0%, #06b6d4 100%);
+      border-radius: 4px;
+      transition: width 0.3s;
+    }
+
+    /* Activity List */
+    .activity-item {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      padding: 16px;
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .activity-info .title {
+      font-size: 16px;
+      font-weight: 600;
+      color: #ffffff;
+      margin-bottom: 4px;
+    }
+
+    .activity-info .time {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    .activity-points {
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .points-positive {
+      color: #10b981;
+    }
+
+    .points-negative {
+      color: #ef4444;
+    }
+
+    /* Rewards */
+    .reward-card {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+
+    .reward-header {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .reward-icon {
+      width: 60px;
+      height: 60px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      flex-shrink: 0;
+    }
+
+    .reward-info {
+      flex: 1;
+    }
+
+    .reward-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: #ffffff;
+      margin-bottom: 6px;
+    }
+
+    .reward-description {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.6);
+      line-height: 1.4;
+    }
+
+    .reward-requirement {
+      display: inline-block;
+      background: rgba(34, 211, 238, 0.2);
+      color: #22d3ee;
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      margin-top: 8px;
+    }
+
+    .reward-button {
+      width: 100%;
+      padding: 14px;
+      background: #22d3ee;
+      color: #0a1628;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.3s;
+    }
+
+    .reward-button:active {
+      opacity: 0.8;
+    }
+
+    .reward-lock {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      color: rgba(255, 255, 255, 0.3);
+      font-size: 20px;
+    }
+
     .hidden {
       display: none;
+    }
+
+    /* Modal styles */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.8);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal.show {
+      display: flex;
+    }
+
+    .modal-content {
+      background: rgba(26, 39, 68, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 24px;
+      padding: 32px;
+      max-width: 400px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .modal-icon {
+      font-size: 64px;
+      margin-bottom: 16px;
+    }
+
+    .modal-title {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .modal-description {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 15px;
+      line-height: 1.5;
+      margin-bottom: 24px;
+    }
+
+    .invite-link {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 20px;
+      word-break: break-all;
+      font-size: 13px;
+      color: #22d3ee;
+    }
+
+    .modal-buttons {
+      display: flex;
+      gap: 12px;
+    }
+
+    .modal-button {
+      flex: 1;
+      padding: 14px;
+      border: none;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.3s;
+    }
+
+    .modal-button:active {
+      opacity: 0.8;
+    }
+
+    .modal-button.primary {
+      background: linear-gradient(135deg, #22d3ee 0%, #06b6d4 100%);
+      color: #0a1628;
+    }
+
+    .modal-button.secondary {
+      background: rgba(255, 255, 255, 0.1);
+      color: #ffffff;
     }
   </style>
 </head>
@@ -295,17 +582,17 @@
 
   <div id="homeView" class="content">
     <h2 class="section-title">
-      <span class="section-icon">🤝</span>
+      <span class="section-icon">🤍</span>
       Community's Awesomest this month
     </h2>
 
     <div class="leaderboard-item">
       <div class="rank" style="background: linear-gradient(135deg, #9333ea, #7e22ce); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">💜</div>
       <div class="user-avatar">
-        <img src="angle_avatar.png" alt="Sarah Gracia">
+        <img src="angle_avatar.png" alt="Sarah Green">
       </div>
       <div class="user-details">
-        <div class="name">Sarah Gracia</div>
+        <div class="name">Sarah Green</div>
       </div>
       <div class="score">+40</div>
     </div>
@@ -313,10 +600,10 @@
     <div class="leaderboard-item">
       <div class="rank" style="background: linear-gradient(135deg, #1e40af, #1e3a8a); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">💙</div>
       <div class="user-avatar">
-        <img src="buddy_avatar.jpg" alt="Omar Haj">
+        <img src="buddy_avatar.jpg" alt="Mo fatih">
       </div>
       <div class="user-details">
-        <div class="name">Omar Haj</div>
+        <div class="name">Mike Stone</div>
       </div>
       <div class="score">+29</div>
     </div>
@@ -327,7 +614,7 @@
         <img src="Neighbour_1.jpg" alt="Lisa Bauer">
       </div>
       <div class="user-details">
-        <div class="name">Lisa Bauer</div>
+        <div class="name">Emma Wood</div>
       </div>
       <div class="score">+22</div>
     </div>
@@ -337,27 +624,27 @@
       Help needed!
     </h2>
 
-    <div class="task-item">
+    <div class="task-item" onclick="showTaskDetail('Website Design')">
       <div class="task-title">website design</div>
       <div class="task-arrow">›</div>
     </div>
 
-    <div class="task-item">
+    <div class="task-item" onclick="showTaskDetail('Community Garden Cleanup')">
       <div class="task-title">Community garden cleanup</div>
       <div class="task-arrow">›</div>
     </div>
 
-    <div class="task-item">
+    <div class="task-item" onclick="showTaskDetail('Dog Walking')">
       <div class="task-title">Dog walking - afternoon shift</div>
       <div class="task-arrow">›</div>
     </div>
 
-    <div class="task-item">
+    <div class="task-item" onclick="showTaskDetail('Help Moving Furniture')">
       <div class="task-title">Help moving furniture</div>
       <div class="task-arrow">›</div>
     </div>
 
-    <div class="task-item">
+    <div class="task-item" onclick="showTaskDetail('Help with Taxes')">
       <div class="task-title">Help with taxes</div>
       <div class="task-arrow">›</div>
     </div>
@@ -374,19 +661,304 @@
     </div>
   </div>
 
+
+  <div id="walletView" class="content hidden">
+    <div class="balance-card">
+      <div class="balance-header">
+        <span>💰</span>
+        <span>Total Balance</span>
+      </div>
+      <div class="balance-amount">42 tTons</div>
+      <div class="balance-change">
+        <span>📈</span>
+        <span>+7 this week</span>
+      </div>
+    </div>
+
+    <div class="badge-section">
+      <div class="badge-header">
+        <div class="badge-title">Current Badge</div>
+        <div class="badge-level">Neighbour</div>
+      </div>
+      <div class="badge-progress">
+        <div class="progress-label">
+          <span>Progress to Buddy</span>
+          <span>4/20</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" style="width: 52.5%;"></div>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="section-title">
+      <span class="section-icon">🎯</span>
+      Recent Activity
+    </h2>
+
+    <div class="activity-item">
+      <div class="activity-info">
+        <div class="title">Grass trimming help</div>
+        <div class="time">2h ago</div>
+      </div>
+      <div class="activity-points points-positive">+5</div>
+    </div>
+
+    <div class="activity-item">
+      <div class="activity-info">
+        <div class="title">Garden cleanup</div>
+        <div class="time">1d ago</div>
+      </div>
+      <div class="activity-points points-positive">+8</div>
+    </div>
+
+    <div class="activity-item">
+      <div class="activity-info">
+        <div class="title">Event ticket</div>
+        <div class="time">2d ago</div>
+      </div>
+      <div class="activity-points points-negative">-5</div>
+    </div>
+
+    <div class="activity-item">
+      <div class="activity-info">
+        <div class="title">Dog walking</div>
+        <div class="time">3d ago</div>
+      </div>
+      <div class="activity-points points-positive">+1</div>
+    </div>
+  </div>
+
+  <div id="rewardsView" class="content hidden">
+    <h2 class="section-title">
+      <span class="section-icon">🎁</span>
+      Available Rewards
+    </h2>
+
+    <div class="reward-card" style="position: relative;">
+      <div class="reward-lock">🔒</div>
+      <div class="reward-header">
+        <div class="reward-icon" style="background: linear-gradient(135deg, #9333ea, #7e22ce);">👥</div>
+        <div class="reward-info">
+          <div class="reward-title">Networking Event Access</div>
+          <div class="reward-description">Join exclusive networking events with top community members</div>
+          <span class="reward-requirement">Requires: Buddy</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="reward-card">
+      <div class="reward-header">
+        <div class="reward-icon" style="background: linear-gradient(135deg, #2563eb, #1e40af);">⭐</div>
+        <div class="reward-info">
+          <div class="reward-title">Community Workshop Pass</div>
+          <div class="reward-description">Attend skill-sharing workshops and masterclasses</div>
+          <span class="reward-requirement">Requires: Neighbour</span>
+        </div>
+      </div>
+      <button class="reward-button" onclick="claimReward('Workshop Pass')">Claim Reward</button>
+    </div>
+
+    <div class="reward-card" style="position: relative;">
+      <div class="reward-lock">🔒</div>
+      <div class="reward-header">
+        <div class="reward-icon" style="background: linear-gradient(135deg, #0891b2, #0e7490);">🎁</div>
+        <div class="reward-info">
+          <div class="reward-title">VIP Garden Party Invite</div>
+          <div class="reward-description">Get exclusive access to the annual community garden party</div>
+          <span class="reward-requirement">Requires: Angel</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="reward-card" style="position: relative;">
+      <div class="reward-lock">🔒</div>
+      <div class="reward-header">
+        <div class="reward-icon" style="background: linear-gradient(135deg, #b45309, #92400e);">👥</div>
+        <div class="reward-info">
+          <div class="reward-title">Monthly Community Dinner</div>
+          <div class="reward-description">Free entry to monthly community dinners and socials</div>
+          <span class="reward-requirement">Requires: Buddy</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="reward-card">
+      <div class="reward-header">
+        <div class="reward-icon" style="background: linear-gradient(135deg, #10b981, #059669);">🔄</div>
+        <div class="reward-info">
+          <div class="reward-title">Skill Exchange Program</div>
+          <div class="reward-description">Priority access to skill exchange opportunities</div>
+          <span class="reward-requirement">Requires: Neighbour</span>
+        </div>
+      </div>
+      <button class="reward-button" onclick="claimReward('Skill Exchange')">Claim Reward</button>
+    </div>
+  </div>
+
+  <!-- Invite Modal -->
+  <div id="inviteModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-icon">🎁</div>
+      <div class="modal-title">Invite a Neighbour</div>
+      <div class="modal-description">
+        Share this link with someone who has a Neighbourly NFT badge. They'll be able to join the community!
+      </div>
+      <div class="invite-link" id="inviteLinkText">
+        Generating link...
+      </div>
+      <div class="modal-buttons">
+        <button class="modal-button primary" onclick="shareInviteLink()">
+          Share Link
+        </button>
+        <button class="modal-button secondary" onclick="closeInviteModal()">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+
   <div class="bottom-nav">
-    <button class="nav-item active">
+    <button class="nav-item active" onclick="switchView('home')">
       <span class="icon">🏠</span>
       <span class="label">Home</span>
     </button>
-    <button class="nav-item">
+    <button class="nav-item" onclick="switchView('wallet')">
       <span class="icon">💳</span>
       <span class="label">Wallet</span>
     </button>
-    <button class="nav-item">
+    <button class="nav-item" onclick="switchView('rewards')">
       <span class="icon">🎁</span>
       <span class="label">My Rewards</span>
     </button>
   </div>
+
+  <script>
+    const tg = window.Telegram?.WebApp || null;
+    let currentUserId = null;
+    let currentInviteLink = '';
+    
+    if (tg) {
+      tg.ready();
+      tg.expand();
+      
+      const user = tg.initDataUnsafe?.user;
+      if (user) {
+        currentUserId = user.id;
+        document.getElementById('userName').textContent = user.first_name || 'Neighbour';
+      }
+    }
+
+    function switchView(view) {
+      // Hide all views
+      document.getElementById('homeView').classList.add('hidden');
+      const walletView = document.getElementById('walletView');
+      const rewardsView = document.getElementById('rewardsView');
+      
+      if (walletView) walletView.classList.add('hidden');
+      if (rewardsView) rewardsView.classList.add('hidden');
+      
+      // Remove active from all nav items
+      document.querySelectorAll('.nav-item').forEach(item => {
+        item.classList.remove('active');
+      });
+      
+      // Show selected view and activate nav item
+      if (view === 'home') {
+        document.getElementById('homeView').classList.remove('hidden');
+        document.querySelectorAll('.nav-item')[0].classList.add('active');
+      } else if (view === 'wallet') {
+        if (walletView) {
+          walletView.classList.remove('hidden');
+        }
+        document.querySelectorAll('.nav-item')[1].classList.add('active');
+      } else if (view === 'rewards') {
+        if (rewardsView) {
+          rewardsView.classList.remove('hidden');
+        }
+        document.querySelectorAll('.nav-item')[2].classList.add('active');
+      }
+    }
+
+    function claimReward(rewardName) {
+      if (tg && tg.showAlert) {
+        tg.showAlert(`Claiming reward: ${rewardName}\n\nCongratulations! This reward is now yours.`);
+      } else {
+        alert(`Claiming reward: ${rewardName}\n\nCongratulations! This reward is now yours.`);
+      }
+    }
+
+    function showTaskDetail(taskName) {
+      if (tg && tg.showAlert) {
+        tg.showAlert(`Task: ${taskName}\n\nIn the full app, you'll be able to accept this task and earn Time Credits!`);
+      } else {
+        alert(`Task: ${taskName}\n\nIn the full app, you'll be able to accept this task and earn Time Credits!`);
+      }
+    }
+
+    function askForHelp() {
+      if (tg && tg.showAlert) {
+        tg.showAlert(`Ask for Help\n\nIn the full app, you'll be able to post your own help request and other community members can assist you!`);
+      } else {
+        alert(`Ask for Help\n\nIn the full app, you'll be able to post your own help request and other community members can assist you!`);
+      }
+    }
+
+    async function generateInviteLink() {
+      const modal = document.getElementById('inviteModal');
+      const linkText = document.getElementById('inviteLinkText');
+      
+      modal.classList.add('show');
+      linkText.textContent = 'Generating link...';
+
+      try {
+        // Generate unique invite link
+        const inviteCode = generateInviteCode();
+        const botUsername = 'YOUR_BOT_USERNAME'; // Replace with your bot username
+        
+        // Create Telegram deep link that opens the bot
+        currentInviteLink = `https://t.me/${botUsername}?start=invite_${inviteCode}`;
+        
+        linkText.textContent = currentInviteLink;
+
+        // Optionally save the invite to backend
+        // await saveInvite(currentUserId, inviteCode);
+      } catch (error) {
+        console.error('Error generating invite:', error);
+        linkText.textContent = 'Error generating link. Please try again.';
+      }
+    }
+
+    function generateInviteCode() {
+      // Generate a unique code (you can make this more sophisticated)
+      const timestamp = Date.now().toString(36);
+      const random = Math.random().toString(36).substring(2, 7);
+      return `${timestamp}${random}`;
+    }
+
+    function shareInviteLink() {
+      if (tg && tg.openTelegramLink) {
+        // Share via Telegram
+        const shareText = encodeURIComponent(`Join our Neighbourly community! 🏡\n\n${currentInviteLink}`);
+        tg.openTelegramLink(`https://t.me/share/url?url=${encodeURIComponent(currentInviteLink)}&text=${shareText}`);
+      } else if (navigator.share) {
+        // Use Web Share API
+        navigator.share({
+          title: 'Join Neighbourly',
+          text: 'Join our Neighbourly community! 🏡',
+          url: currentInviteLink
+        });
+      } else {
+        // Fallback: Copy to clipboard
+        navigator.clipboard.writeText(currentInviteLink).then(() => {
+          alert('Link copied to clipboard!');
+        });
+      }
+    }
+
+    function closeInviteModal() {
+      document.getElementById('inviteModal').classList.remove('show');
+    }
+  </script>
 </body>
 </html>
