@@ -14,16 +14,28 @@
 
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: linear-gradient(180deg, #0a1628 0%, #1a2332 100%);
+      background: url('space_image.png') center/cover fixed;
       color: #ffffff;
       min-height: 100vh;
       padding-bottom: 80px;
+      position: relative;
+    }
+    
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(10, 22, 40, 0.85);
+      z-index: -1;
     }
 
     .header {
       padding: 24px 20px;
       display: flex;
-      align-items: center;
+      align-items: flex-end;
       gap: 16px;
     }
 
@@ -43,11 +55,12 @@
       flex: 1;
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      justify-content: flex-end;
+      padding-bottom: 4px;
     }
 
     .greeting {
-      font-size: 16px;
+      font-size: 20px;
       color: rgba(255, 255, 255, 0.7);
       margin-bottom: 4px;
     }
@@ -417,6 +430,40 @@
     .hidden {
       display: none;
     }
+
+    /* Ask for Help Button */
+    .ask-help-section {
+      margin-top: 32px;
+      margin-bottom: 32px;
+      padding: 0 20px;
+    }
+
+    .ask-help-button {
+      width: 100%;
+      padding: 18px;
+      background: linear-gradient(135deg, #22d3ee 0%, #06b6d4 100%);
+      color: #0a1628;
+      border: none;
+      border-radius: 16px;
+      font-size: 18px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s, opacity 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      box-shadow: 0 4px 12px rgba(34, 211, 238, 0.3);
+    }
+
+    .ask-help-button:active {
+      transform: scale(0.98);
+      opacity: 0.9;
+    }
+
+    .ask-help-icon {
+      font-size: 24px;
+    }
   </style>
 </head>
 <body>
@@ -425,7 +472,7 @@
       <img src="Neighbour_1.jpg" alt="Badge" class="badge-image">
     </div>
     <div class="header-text">
-      <div class="greeting">Hello Neighbour!</div>
+      <div class="greeting">Hey Neighbour!</div>
       <div class="user-name" id="userName">Alex Builder</div>
     </div>
   </div>
@@ -437,7 +484,7 @@
     </h2>
 
     <div class="leaderboard-item">
-      <div class="rank">🥇</div>
+      <div class="rank">❤️</div>
       <div class="user-avatar" style="background: linear-gradient(135deg, #06b6d4, #0891b2);">SA</div>
       <div class="user-details">
         <div class="name">Sarah Green</div>
@@ -446,7 +493,7 @@
     </div>
 
     <div class="leaderboard-item">
-      <div class="rank">🥈</div>
+      <div class="rank">🧡</div>
       <div class="user-avatar" style="background: linear-gradient(135deg, #3b82f6, #2563eb);">MI</div>
       <div class="user-details">
         <div class="name">Mike Stone</div>
@@ -455,7 +502,7 @@
     </div>
 
     <div class="leaderboard-item">
-      <div class="rank">🥉</div>
+      <div class="rank">💛</div>
       <div class="user-avatar" style="background: linear-gradient(135deg, #06b6d4, #0891b2);">EM</div>
       <div class="user-details">
         <div class="name">Emma Wood</div>
@@ -491,6 +538,13 @@
     <div class="task-item" onclick="showTaskDetail('Help with Taxes')">
       <div class="task-title">Help with taxes</div>
       <div class="task-arrow">›</div>
+    </div>
+
+    <div class="ask-help-section">
+      <button class="ask-help-button" onclick="askForHelp()">
+        <span class="ask-help-icon">🙋</span>
+        <span>Ask for Help</span>
+      </button>
     </div>
   </div>
 
@@ -694,6 +748,14 @@
         tg.showAlert(`Claiming reward: ${rewardName}\n\nCongratulations! This reward is now yours.`);
       } else {
         alert(`Claiming reward: ${rewardName}\n\nCongratulations! This reward is now yours.`);
+      }
+    }
+
+    function askForHelp() {
+      if (tg && tg.showAlert) {
+        tg.showAlert(`Ask for Help\n\nIn the full app, you'll be able to post your own help request and other community members can assist you!`);
+      } else {
+        alert(`Ask for Help\n\nIn the full app, you'll be able to post your own help request and other community members can assist you!`);
       }
     }
   </script>
