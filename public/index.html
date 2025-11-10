@@ -961,7 +961,7 @@
       </div>
       
       <div class="wallet-options">
-        <div class="wallet-option" onclick="connectTonkeeper()">
+        <div class="wallet-option" onclick="connectWalletWithSource('tonkeeper')">
           <div class="wallet-icon-box">💎</div>
           <div class="wallet-option-info">
             <div class="wallet-option-name">Tonkeeper</div>
@@ -969,7 +969,7 @@
           </div>
         </div>
 
-        <div class="wallet-option" onclick="connectTonSpace()">
+        <div class="wallet-option" onclick="connectWalletWithSource('tonspace')">
           <div class="wallet-icon-box">✈️</div>
           <div class="wallet-option-info">
             <div class="wallet-option-name">TON Space</div>
@@ -977,7 +977,7 @@
           </div>
         </div>
 
-        <div class="wallet-option" onclick="connectMyTonWallet()">
+        <div class="wallet-option" onclick="connectWalletWithSource('mytonwallet')">
           <div class="wallet-icon-box">🔷</div>
           <div class="wallet-option-info">
             <div class="wallet-option-name">MyTonWallet</div>
@@ -1225,33 +1225,59 @@
       document.getElementById('walletModal').classList.remove('show');
     }
 
-    async function connectTonkeeper() {
+    async function connectWalletWithSource(source) {
       if (!checkConnector()) return;
       
-      console.log('Connecting to Tonkeeper...');
+      const walletName = source === 'tonkeeper' ? 'Tonkeeper' : 
+                        source === 'tonspace' ? 'TON Space' : 
+                        'MyTonWallet';
+      
+      console.log(`Connecting to ${walletName}...`);
       try {
-        // Create connection request
-        const walletConnectionSource = {
-          universalLink: 'https://app.tonkeeper.com/ton-connect',
-          bridgeUrl: 'https://bridge.tonapi.io/bridge'
+        // Use embeddedWallet for Telegram WebApp
+        const embeddedWallet = source === 'tonspace' && tg;
+        
+        // Prepare connection options
+        const options = {
+          manifestUrl: 'https://neighbourly-three.vercel.app/tonconnect-manifest.json',
+          items: [{ name: 'ton_addr' }]
         };
         
-        console.log('Requesting connection...');
-        const universalLink = await connector.connect(walletConnectionSource);
-        console.log('Got universal link:', universalLink);
-        
-        if (tg) {
-          console.log('Opening in Telegram...');
-          window.location.href = universalLink;
+        if (embeddedWallet) {
+          console.log('Using embedded wallet connection...');
+          const universalLink = await connector.connect({
+            universalLink: 'https://t.me/wallet?startapp=tonconnect-' + 
+              encodeURIComponent(JSON.stringify(options))
+          });
+          tg.openLink(universalLink);
         } else {
-          console.log('Opening in browser...');
-          window.open(universalLink, '_blank');
+          console.log('Using universal link connection...');
+          const universalLink = await connector.connect({
+            universalLink: source === 'tonkeeper' 
+              ? 'https://app.tonkeeper.com/ton-connect'
+              : source === 'tonspace'
+              ? 'https://tonspace.co/ton-connect'
+              : undefined
+          });
+          
+          if (tg) {
+            console.log('Opening in Telegram...');
+            tg.openLink(universalLink);
+          } else {
+            console.log('Opening in browser...');
+            window.open(universalLink, '_blank');
+          }
         }
+        
         closeWalletModal();
       } catch (err) {
-        console.error('Error connecting to Tonkeeper:', err);
-        showAlert('Failed to connect to Tonkeeper. Please try again.');
+        console.error(`Error connecting to ${walletName}:`, err);
+        showAlert(`Failed to connect to ${walletName}. Please try again.`);
       }
+    }
+    
+    async function connectTonkeeper() {
+      await connectWalletWithSource('tonkeeper');
     }
 
     async function connectTonSpace() {
@@ -1282,7 +1308,7 @@
       console.log('Connecting to MyTonWallet...');
       try {
         // Universal link for MyTonWallet
-        const universalLink = tonConnect.connect({
+        const universalLink = await connector.connect({
           manifestUrl: 'https://neighbourly-three.vercel.app/tonconnect-manifest.json'
         });
         
@@ -1290,7 +1316,7 @@
         window.open(universalLink, '_blank');
         
         // Listen for connection
-        tonConnect.onStatusChange(async (wallet) => {
+        connector.onStatusChange(async (wallet) => {
           if (wallet) {
             console.log('Wallet connected:', wallet);
             setWalletConnected('MyTonWallet', wallet.account.address);
