@@ -5,8 +5,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Neighbourly - Time Banking Community</title>
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
-  <script src="https://unpkg.com/@tonconnect/sdk@latest/dist/tonconnect-sdk.js"></script>
-  <script src="https://unpkg.com/tonweb@0.0.60/dist/tonweb.js"></script>
+  <script src="https://unpkg.com/@tonconnect/sdk@2.1.3/dist/tonconnect-sdk.min.js"></script>
+  <script>
+    // Wait for SDK to load
+    function waitForTonConnect() {
+      return new Promise((resolve) => {
+        if (window.TonConnectSDK) {
+          resolve(window.TonConnectSDK);
+        } else {
+          const script = document.createElement('script');
+          script.src = 'https://unpkg.com/@tonconnect/sdk@2.1.3/dist/tonconnect-sdk.min.js';
+          script.onload = () => resolve(window.TonConnectSDK);
+          document.head.appendChild(script);
+        }
+      });
+    }
+  </script>
   <style>
     * {
       margin: 0;
@@ -1016,10 +1030,8 @@
 
     // Helper function for showing alerts that works in both Telegram and browser
     function showAlert(message) {
-      if (tg) {
-        // For Telegram, just log to console since showAlert is not supported
-        console.log('Alert:', message);
-      } else {
+      console.log('Alert:', message);
+      if (!tg) {
         alert(message);
       }
     }
@@ -1027,10 +1039,11 @@
     // Initialize TON Connect after page loads
     window.addEventListener('load', async () => {
       try {
-        // Initialize TON Connect
-        if (!window.TonConnectSDK) {
-          throw new Error('TON Connect SDK not loaded');
-        }
+        // Wait for TON Connect SDK to load
+        const TonConnectSDK = await waitForTonConnect();
+        console.log('TON Connect SDK loaded');
+        
+        // Initialize the connector
         connector = new TonConnectSDK.TonConnect({
           manifestUrl: 'https://neighbourly-three.vercel.app/tonconnect-manifest.json'
         });
@@ -1217,17 +1230,21 @@
       
       console.log('Connecting to Tonkeeper...');
       try {
-        // For Telegram Web App, we'll use a different connection method
+        // Create connection request
+        const walletConnectionSource = {
+          universalLink: 'https://app.tonkeeper.com/ton-connect',
+          bridgeUrl: 'https://bridge.tonapi.io/bridge'
+        };
+        
+        console.log('Requesting connection...');
+        const universalLink = await connector.connect(walletConnectionSource);
+        console.log('Got universal link:', universalLink);
+        
         if (tg) {
-          const universalLink = await connector.connect({
-            universalLink: 'https://app.tonkeeper.com/ton-connect',
-            bridgeUrl: 'https://bridge.tonapi.io/bridge'
-          });
-          tg.openLink(universalLink);
+          console.log('Opening in Telegram...');
+          window.location.href = universalLink;
         } else {
-          const universalLink = await connector.connect({
-            jsBridgeKey: 'tonkeeper'
-          });
+          console.log('Opening in browser...');
           window.open(universalLink, '_blank');
         }
         closeWalletModal();
@@ -1317,7 +1334,9 @@
 
     async function disconnectWallet() {
       try {
-        await connector.disconnect();
+        if (connector) {
+          await connector.disconnect();
+        }
         connectedWallet = null;
         
         const btn = document.getElementById('connectWalletBtn');
@@ -1326,11 +1345,7 @@
         const statusDiv = document.getElementById('walletStatus');
         statusDiv.innerHTML = '';
         
-        if (tg && tg.showAlert) {
-          tg.showAlert('Wallet disconnected successfully!');
-        } else {
-          alert('Wallet disconnected successfully!');
-        }
+        showAlert('Wallet disconnected successfully!');
       } catch (err) {
         console.error('Error disconnecting wallet:', err);
       }
