@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Neighbourly - Time Banking Community</title>
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <script src="https://unpkg.com/@tonconnect/sdk@latest/dist/tonconnect-sdk.min.js"></script>
   <script src="https://unpkg.com/tonweb@0.0.60/dist/tonweb.js"></script>
   <style>
     * {
@@ -871,6 +872,49 @@
     </div>
   </div>
 
+ <div id="tasks" class="content hidden">
+    <h2 class="section-title">
+      <span class="section-icon">🎁</span>
+      Tasks
+    </h2>
+
+    <div class="reward-card" style="position: relative;">
+      <div class="reward-lock">🔒</div>
+      <div class="reward-header">
+        <div class="reward-icon" style="background: linear-gradient(135deg, #9333ea, #7e22ce);">👥</div>
+        <div class="reward-info">
+          <div class="reward-title">Networking Event Access</div>
+          <div class="reward-description">Join exclusive networking events with top community members</div>
+          <span class="reward-requirement">Requires: Buddy</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="reward-card">
+      <div class="reward-header">
+        <div class="reward-icon" style="background: linear-gradient(135deg, #2563eb, #1e40af);">⭐</div>
+        <div class="reward-info">
+          <div class="reward-title">Community Workshop Pass</div>
+          <div class="reward-description">Attend skill-sharing workshops and masterclasses</div>
+          <span class="reward-requirement">Requires: Neighbour</span>
+        </div>
+      </div>
+      <button class="reward-button" onclick="claimReward('Workshop Pass')">Claim Reward</button>
+    </div>
+
+    <div class="reward-card">
+      <div class="reward-header">
+        <div class="reward-icon" style="background: linear-gradient(135deg, #10b981, #059669);">🔄</div>
+        <div class="reward-info">
+          <div class="reward-title">Skill Exchange Program</div>
+          <div class="reward-description">Priority access to skill exchange opportunities</div>
+          <span class="reward-requirement">Requires: Neighbour</span>
+        </div>
+      </div>
+      <button class="reward-button" onclick="claimReward('Skill Exchange')">Claim Reward</button>
+    </div>
+  </div>
+  
   <!-- Invite Modal -->
   <div id="inviteModal" class="modal">
     <div class="modal-content">
@@ -984,9 +1028,12 @@
       document.getElementById('homeView').classList.add('hidden');
       const walletView = document.getElementById('walletView');
       const rewardsView = document.getElementById('rewardsView');
+      const tasksView = document.getElementById('tasksView');
+
       
       if (walletView) walletView.classList.add('hidden');
       if (rewardsView) rewardsView.classList.add('hidden');
+      if (tasksView) tasksView.classList.add('hidden');
       
       document.querySelectorAll('.nav-item').forEach(item => {
         item.classList.remove('active');
@@ -1005,6 +1052,11 @@
           rewardsView.classList.remove('hidden');
         }
         document.querySelectorAll('.nav-item')[2].classList.add('active');
+      } else if (view === 'tasks') {
+        if (tasksView) {
+          tasksView.classList.remove('hidden');
+        }
+        document.querySelectorAll('.nav-item')[3].classList.add('active');
       }
     }
 
@@ -1071,6 +1123,11 @@
       document.getElementById('inviteModal').classList.remove('show');
     }
 
+    // Initialize TON Connect
+    const tonConnect = new TON_CONNECT.TonConnect({
+      manifestUrl: 'https://neighbourly-three.vercel.app/tonconnect-manifest.json'
+    });
+
     // Wallet Connection Functions
     document.getElementById('connectWalletBtn').addEventListener('click', () => {
       if (connectedWallet) {
@@ -1084,50 +1141,70 @@
       document.getElementById('walletModal').classList.remove('show');
     }
 
-    function connectTonkeeper() {
+    async function connectTonkeeper() {
       closeWalletModal();
-      
-      if (tg && tg.openLink) {
-        tg.openLink('https://tonkeeper.com/');
-        setTimeout(() => {
-          const demoAddress = 'UQAa...' + Math.random().toString(36).substring(2, 8).toUpperCase();
-          setWalletConnected('Tonkeeper', demoAddress);
-        }, 2000);
-      } else {
-        window.open('https://tonkeeper.com/', '_blank');
-        const demoAddress = 'UQAa...' + Math.random().toString(36).substring(2, 8).toUpperCase();
-        setWalletConnected('Tonkeeper', demoAddress);
+      try {
+        const wallet = await tonConnect.connect();
+        if (wallet?.account) {
+          setWalletConnected('Tonkeeper', wallet.account.address);
+          if (tg && tg.showAlert) {
+            tg.showAlert('Successfully connected to Tonkeeper!');
+          }
+        }
+      } catch (err) {
+        console.error('Error connecting to Tonkeeper:', err);
+        if (tg && tg.showAlert) {
+          tg.showAlert('Failed to connect to Tonkeeper. Please try again.');
+        } else {
+          alert('Failed to connect to Tonkeeper. Please try again.');
+        }
       }
     }
 
-    function connectTonSpace() {
+    async function connectTonSpace() {
       closeWalletModal();
-      
-      const demoAddress = 'UQBb...' + Math.random().toString(36).substring(2, 8).toUpperCase();
-      setWalletConnected('TON Space', demoAddress);
-      
-      if (tg && tg.showAlert) {
-        tg.showAlert('Connected to TON Space!\n\nIn production, this would connect to your actual TON Space wallet.');
-      } else {
-        alert('Connected to TON Space!\n\nIn production, this would connect to your actual TON Space wallet.');
+      try {
+        const wallet = await tonConnect.connect();
+        if (wallet?.account) {
+          setWalletConnected('TON Space', wallet.account.address);
+          if (tg && tg.showAlert) {
+            tg.showAlert('Successfully connected to TON Space!');
+          }
+        }
+      } catch (err) {
+        console.error('Error connecting to TON Space:', err);
+        if (tg && tg.showAlert) {
+          tg.showAlert('Failed to connect to TON Space. Please try again.');
+        } else {
+          alert('Failed to connect to TON Space. Please try again.');
+        }
       }
     }
 
-    function connectMyTonWallet() {
+    async function connectMyTonWallet() {
       closeWalletModal();
-      
-      const demoAddress = 'UQCc...' + Math.random().toString(36).substring(2, 8).toUpperCase();
-      setWalletConnected('MyTonWallet', demoAddress);
-      
-      alert('Connected to MyTonWallet!\n\nIn production, this would connect via browser extension.');
+      try {
+        const wallet = await tonConnect.connect();
+        if (wallet?.account) {
+          setWalletConnected('MyTonWallet', wallet.account.address);
+          if (tg && tg.showAlert) {
+            tg.showAlert('Successfully connected to MyTonWallet!');
+          }
+        }
+      } catch (err) {
+        console.error('Error connecting to MyTonWallet:', err);
+        if (tg && tg.showAlert) {
+          tg.showAlert('Failed to connect to MyTonWallet. Please try again.');
+        } else {
+          alert('Failed to connect to MyTonWallet. Please try again.');
+        }
+      }
     }
 
     function connectDemo() {
       closeWalletModal();
-      
       const demoAddress = 'UQDd...' + Math.random().toString(36).substring(2, 8).toUpperCase();
       setWalletConnected('Demo Wallet', demoAddress);
-      
       alert('Demo wallet connected!\n\nThis is a test wallet for demonstration purposes.');
     }
 
@@ -1146,7 +1223,10 @@
       `;
     }
 
-    function disconnectWallet() {
+    async function disconnectWallet() {
+      if (tonConnect.connected) {
+        await tonConnect.disconnect();
+      }
       connectedWallet = null;
       
       const btn = document.getElementById('connectWalletBtn');
@@ -1161,6 +1241,16 @@
         alert('Wallet disconnected successfully!');
       }
     }
+
+    // Check for existing connection on page load
+    window.addEventListener('load', async () => {
+      if (tonConnect.connected) {
+        const wallet = await tonConnect.getWalletInfo();
+        if (wallet?.account) {
+          setWalletConnected(wallet.name || 'TON Wallet', wallet.account.address);
+        }
+      }
+    });
   </script>
 </body>
 </html>
