@@ -1156,11 +1156,26 @@
     }
 
     // Wallet Connection Functions
-    document.getElementById('connectWalletBtn').addEventListener('click', () => {
-      if (connectedWallet) {
-        disconnectWallet();
+    // Make sure we set up the button click handler after the DOM is loaded
+    document.addEventListener('DOMContentLoaded', () => {
+      const connectBtn = document.getElementById('connectWalletBtn');
+      if (connectBtn) {
+        connectBtn.addEventListener('click', () => {
+          console.log('Connect wallet button clicked');
+          if (connectedWallet) {
+            disconnectWallet();
+          } else {
+            const modal = document.getElementById('walletModal');
+            if (modal) {
+              console.log('Showing wallet modal');
+              modal.classList.add('show');
+            } else {
+              console.error('Wallet modal not found!');
+            }
+          }
+        });
       } else {
-        document.getElementById('walletModal').classList.add('show');
+        console.error('Connect wallet button not found!');
       }
     });
 
@@ -1169,15 +1184,27 @@
     }
 
     async function connectTonkeeper() {
-      closeWalletModal();
+      console.log('Connecting to Tonkeeper...');
       try {
-        const wallet = await tonConnect.connect();
-        if (wallet?.account) {
-          setWalletConnected('Tonkeeper', wallet.account.address);
-          if (tg && tg.showAlert) {
-            tg.showAlert('Successfully connected to Tonkeeper!');
+        // Universal link for Tonkeeper
+        const universalLink = tonConnect.connect({
+          manifestUrl: 'https://neighbourly-three.vercel.app/tonconnect-manifest.json'
+        });
+        
+        console.log('Opening Tonkeeper...');
+        window.open(universalLink, '_blank');
+        
+        // Listen for connection
+        tonConnect.onStatusChange(async (wallet) => {
+          if (wallet) {
+            console.log('Wallet connected:', wallet);
+            setWalletConnected('Tonkeeper', wallet.account.address);
+            closeWalletModal();
+            if (tg && tg.showAlert) {
+              tg.showAlert('Successfully connected to Tonkeeper!');
+            }
           }
-        }
+        });
       } catch (err) {
         console.error('Error connecting to Tonkeeper:', err);
         if (tg && tg.showAlert) {
@@ -1189,15 +1216,27 @@
     }
 
     async function connectTonSpace() {
-      closeWalletModal();
+      console.log('Connecting to TON Space...');
       try {
-        const wallet = await tonConnect.connect();
-        if (wallet?.account) {
-          setWalletConnected('TON Space', wallet.account.address);
-          if (tg && tg.showAlert) {
-            tg.showAlert('Successfully connected to TON Space!');
+        // Universal link for TON Space
+        const universalLink = tonConnect.connect({
+          manifestUrl: 'https://neighbourly-three.vercel.app/tonconnect-manifest.json'
+        });
+        
+        console.log('Opening TON Space...');
+        window.open(universalLink, '_blank');
+        
+        // Listen for connection
+        tonConnect.onStatusChange(async (wallet) => {
+          if (wallet) {
+            console.log('Wallet connected:', wallet);
+            setWalletConnected('TON Space', wallet.account.address);
+            closeWalletModal();
+            if (tg && tg.showAlert) {
+              tg.showAlert('Successfully connected to TON Space!');
+            }
           }
-        }
+        });
       } catch (err) {
         console.error('Error connecting to TON Space:', err);
         if (tg && tg.showAlert) {
@@ -1209,15 +1248,27 @@
     }
 
     async function connectMyTonWallet() {
-      closeWalletModal();
+      console.log('Connecting to MyTonWallet...');
       try {
-        const wallet = await tonConnect.connect();
-        if (wallet?.account) {
-          setWalletConnected('MyTonWallet', wallet.account.address);
-          if (tg && tg.showAlert) {
-            tg.showAlert('Successfully connected to MyTonWallet!');
+        // Universal link for MyTonWallet
+        const universalLink = tonConnect.connect({
+          manifestUrl: 'https://neighbourly-three.vercel.app/tonconnect-manifest.json'
+        });
+        
+        console.log('Opening MyTonWallet...');
+        window.open(universalLink, '_blank');
+        
+        // Listen for connection
+        tonConnect.onStatusChange(async (wallet) => {
+          if (wallet) {
+            console.log('Wallet connected:', wallet);
+            setWalletConnected('MyTonWallet', wallet.account.address);
+            closeWalletModal();
+            if (tg && tg.showAlert) {
+              tg.showAlert('Successfully connected to MyTonWallet!');
+            }
           }
-        }
+        });
       } catch (err) {
         console.error('Error connecting to MyTonWallet:', err);
         if (tg && tg.showAlert) {
