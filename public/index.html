@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Neighbourly - Time Banking Community</title>
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
-  <script src="https://unpkg.com/@tonconnect/sdk@latest/dist/tonconnect-sdk.min.js"></script>
+  <script src="https://unpkg.com/@tonconnect/sdk@latest/dist/tonconnect-sdk.js"></script>
   <script src="https://unpkg.com/tonweb@0.0.60/dist/tonweb.js"></script>
   <style>
     * {
@@ -1012,31 +1012,60 @@
     let currentUserId = null;
     let currentInviteLink = '';
     let connectedWallet = null;
+    let connector = null;
 
-    // Initialize TON Connect
-    const tonConnect = new TON_CONNECT.TonConnect({
-      manifestUrl: 'https://neighbourly-three.vercel.app/tonconnect-manifest.json'
-    });
-
-    // Function to update wallet connection status
-    async function updateWalletStatus() {
-      try {
-        const wallet = tonConnect.wallet;
-        if (wallet?.account) {
-          setWalletConnected(wallet.name || 'TON Wallet', wallet.account.address);
-        } else {
-          disconnectWallet();
-        }
-      } catch (error) {
-        console.error('Error updating wallet status:', error);
+    // Helper function for showing alerts that works in both Telegram and browser
+    function showAlert(message) {
+      if (tg) {
+        // For Telegram, just log to console since showAlert is not supported
+        console.log('Alert:', message);
+      } else {
+        alert(message);
       }
     }
 
-    // Initialize wallet status on page load
+    // Initialize TON Connect after page loads
     window.addEventListener('load', async () => {
-      console.log('Checking initial wallet connection...');
-      await updateWalletStatus();
+      try {
+        // Initialize TON Connect
+        if (!window.TonConnectSDK) {
+          throw new Error('TON Connect SDK not loaded');
+        }
+        connector = new TonConnectSDK.TonConnect({
+          manifestUrl: 'https://neighbourly-three.vercel.app/tonconnect-manifest.json'
+        });
+        
+        // Set up wallet status listener
+        connector.onStatusChange(async (wallet) => {
+          if (wallet) {
+            console.log('Wallet connected:', wallet);
+            setWalletConnected(wallet.device.appName || 'TON Wallet', wallet.account.address);
+          } else {
+            console.log('Wallet disconnected');
+            disconnectWallet();
+          }
+        }, console.error);
+
+        // Restore previous connection if any
+        const wallet = await connector.restoreConnection();
+        if (wallet) {
+          console.log('Restored wallet connection:', wallet);
+          setWalletConnected(wallet.device.appName || 'TON Wallet', wallet.account.address);
+        }
+      } catch (err) {
+        console.error('Error initializing TON Connect:', err);
+      }
     });
+
+    // Function to check if connector is initialized
+    function checkConnector() {
+      if (!connector) {
+        console.error('TON Connect not initialized');
+        showAlert('Please wait for wallet connection to initialize...');
+        return false;
+      }
+      return true;
+    }
     
     if (tg) {
       tg.ready();
@@ -1184,66 +1213,51 @@
     }
 
     async function connectTonkeeper() {
+      if (!checkConnector()) return;
+      
       console.log('Connecting to Tonkeeper...');
       try {
-        // Universal link for Tonkeeper
-        const universalLink = tonConnect.connect({
-          manifestUrl: 'https://neighbourly-three.vercel.app/tonconnect-manifest.json'
-        });
-        
-        console.log('Opening Tonkeeper...');
-        window.open(universalLink, '_blank');
-        
-        // Listen for connection
-        tonConnect.onStatusChange(async (wallet) => {
-          if (wallet) {
-            console.log('Wallet connected:', wallet);
-            setWalletConnected('Tonkeeper', wallet.account.address);
-            closeWalletModal();
-            if (tg && tg.showAlert) {
-              tg.showAlert('Successfully connected to Tonkeeper!');
-            }
-          }
-        });
+        // For Telegram Web App, we'll use a different connection method
+        if (tg) {
+          const universalLink = await connector.connect({
+            universalLink: 'https://app.tonkeeper.com/ton-connect',
+            bridgeUrl: 'https://bridge.tonapi.io/bridge'
+          });
+          tg.openLink(universalLink);
+        } else {
+          const universalLink = await connector.connect({
+            jsBridgeKey: 'tonkeeper'
+          });
+          window.open(universalLink, '_blank');
+        }
+        closeWalletModal();
       } catch (err) {
         console.error('Error connecting to Tonkeeper:', err);
-        if (tg && tg.showAlert) {
-          tg.showAlert('Failed to connect to Tonkeeper. Please try again.');
-        } else {
-          alert('Failed to connect to Tonkeeper. Please try again.');
-        }
+        showAlert('Failed to connect to Tonkeeper. Please try again.');
       }
     }
 
     async function connectTonSpace() {
+      if (!checkConnector()) return;
+      
       console.log('Connecting to TON Space...');
       try {
-        // Universal link for TON Space
-        const universalLink = tonConnect.connect({
-          manifestUrl: 'https://neighbourly-three.vercel.app/tonconnect-manifest.json'
-        });
-        
-        console.log('Opening TON Space...');
-        window.open(universalLink, '_blank');
-        
-        // Listen for connection
-        tonConnect.onStatusChange(async (wallet) => {
-          if (wallet) {
-            console.log('Wallet connected:', wallet);
-            setWalletConnected('TON Space', wallet.account.address);
-            closeWalletModal();
-            if (tg && tg.showAlert) {
-              tg.showAlert('Successfully connected to TON Space!');
-            }
-          }
-        });
+        if (tg) {
+          const universalLink = await connector.connect({
+            universalLink: 'https://tonspace.co/ton-connect',
+            bridgeUrl: 'https://bridge.tonapi.io/bridge'
+          });
+          tg.openLink(universalLink);
+        } else {
+          const universalLink = await connector.connect({
+            jsBridgeKey: 'tonapi'
+          });
+          window.open(universalLink, '_blank');
+        }
+        closeWalletModal();
       } catch (err) {
         console.error('Error connecting to TON Space:', err);
-        if (tg && tg.showAlert) {
-          tg.showAlert('Failed to connect to TON Space. Please try again.');
-        } else {
-          alert('Failed to connect to TON Space. Please try again.');
-        }
+        showAlert('Failed to connect to TON Space. Please try again.');
       }
     }
 
@@ -1302,21 +1316,23 @@
     }
 
     async function disconnectWallet() {
-      if (tonConnect.connected) {
-        await tonConnect.disconnect();
-      }
-      connectedWallet = null;
-      
-      const btn = document.getElementById('connectWalletBtn');
-      btn.innerHTML = '<span>💳</span><span>Connect TON Wallet</span>';
-      
-      const statusDiv = document.getElementById('walletStatus');
-      statusDiv.innerHTML = '';
-      
-      if (tg && tg.showAlert) {
-        tg.showAlert('Wallet disconnected successfully!');
-      } else {
-        alert('Wallet disconnected successfully!');
+      try {
+        await connector.disconnect();
+        connectedWallet = null;
+        
+        const btn = document.getElementById('connectWalletBtn');
+        btn.innerHTML = '<span>💳</span><span>Connect TON Wallet</span>';
+        
+        const statusDiv = document.getElementById('walletStatus');
+        statusDiv.innerHTML = '';
+        
+        if (tg && tg.showAlert) {
+          tg.showAlert('Wallet disconnected successfully!');
+        } else {
+          alert('Wallet disconnected successfully!');
+        }
+      } catch (err) {
+        console.error('Error disconnecting wallet:', err);
       }
     }
 

@@ -1,5 +1,7 @@
 {
   "url": "https://neighbourly-three.vercel.app/",
   "name": "Neighbourly",
-  "iconUrl": "https://neighbourly-three.vercel.app/space_image.png"
+  "iconUrl": "https://neighbourly-three.vercel.app/space_image.png",
+  "termsOfUseUrl": "https://neighbourly-three.vercel.app/terms",
+  "privacyPolicyUrl": "https://neighbourly-three.vercel.app/privacy"
 }
