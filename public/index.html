@@ -1012,6 +1012,31 @@
     let currentUserId = null;
     let currentInviteLink = '';
     let connectedWallet = null;
+
+    // Initialize TON Connect
+    const tonConnect = new TON_CONNECT.TonConnect({
+      manifestUrl: 'https://neighbourly-three.vercel.app/tonconnect-manifest.json'
+    });
+
+    // Function to update wallet connection status
+    async function updateWalletStatus() {
+      try {
+        const wallet = tonConnect.wallet;
+        if (wallet?.account) {
+          setWalletConnected(wallet.name || 'TON Wallet', wallet.account.address);
+        } else {
+          disconnectWallet();
+        }
+      } catch (error) {
+        console.error('Error updating wallet status:', error);
+      }
+    }
+
+    // Initialize wallet status on page load
+    window.addEventListener('load', async () => {
+      console.log('Checking initial wallet connection...');
+      await updateWalletStatus();
+    });
     
     if (tg) {
       tg.ready();
@@ -1025,15 +1050,17 @@
     }
 
     function switchView(view) {
-      document.getElementById('homeView').classList.add('hidden');
-      const walletView = document.getElementById('walletView');
-      const rewardsView = document.getElementById('rewardsView');
-      const tasksView = document.getElementById('tasksView');
-
+      console.log('Switching to view:', view);
+      // Hide all views first
+      const allViews = ['homeView', 'walletView', 'rewardsView', 'tasks'].map(id => 
+        document.getElementById(id)
+      );
       
-      if (walletView) walletView.classList.add('hidden');
-      if (rewardsView) rewardsView.classList.add('hidden');
-      if (tasksView) tasksView.classList.add('hidden');
+      allViews.forEach(view => {
+        if (view) {
+          view.classList.add('hidden');
+        }
+      });
       
       document.querySelectorAll('.nav-item').forEach(item => {
         item.classList.remove('active');
@@ -1043,8 +1070,13 @@
         document.getElementById('homeView').classList.remove('hidden');
         document.querySelectorAll('.nav-item')[0].classList.add('active');
       } else if (view === 'wallet') {
+        const walletView = document.getElementById('walletView');
+        console.log('Showing wallet view', walletView);
         if (walletView) {
+          console.log('Wallet view found, removing hidden class');
           walletView.classList.remove('hidden');
+        } else {
+          console.error('Wallet view not found!');
         }
         document.querySelectorAll('.nav-item')[1].classList.add('active');
       } else if (view === 'rewards') {
@@ -1122,11 +1154,6 @@
     function closeInviteModal() {
       document.getElementById('inviteModal').classList.remove('show');
     }
-
-    // Initialize TON Connect
-    const tonConnect = new TON_CONNECT.TonConnect({
-      manifestUrl: 'https://neighbourly-three.vercel.app/tonconnect-manifest.json'
-    });
 
     // Wallet Connection Functions
     document.getElementById('connectWalletBtn').addEventListener('click', () => {
