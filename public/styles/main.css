@@ -97,7 +97,8 @@ body:has(#walletView:not(.hidden)) .header {
 
 .home-header .header-bg {
   opacity: 0.4;
-  transform: scale(1.2); /* Slightly larger to ensure coverage of rounded corners */
+  transform: scale(0.9); /* Zoom out the background image */
+  transition: transform 0.3s ease;
 }
 
 .header-logo {
@@ -106,7 +107,7 @@ body:has(#walletView:not(.hidden)) .header {
   margin-bottom: 12px;
   border-radius: 15px;
   object-fit: cover;
-  transform: scale(1.4); /* Zoom in the logo */
+  transform: scale(1.3); /* Adjusted zoom level for logo */
   transform-origin: center;
 }
 
