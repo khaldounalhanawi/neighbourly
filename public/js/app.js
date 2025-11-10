@@ -1,3 +1,24 @@
+function switchView(view) {
+  // Hide all views
+  document.getElementById('homeView').classList.add('hidden');
+  document.getElementById('walletView').classList.add('hidden');
+  document.getElementById('rewardsView').classList.add('hidden');
+  document.getElementById('tasks').classList.add('hidden');
+
+  // Show selected view
+  if (view === 'tasks') {
+    document.getElementById('tasks').classList.remove('hidden');
+  } else {
+    document.getElementById(view + 'View').classList.remove('hidden');
+  }
+
+  // Update navigation
+  document.querySelectorAll('.nav-item').forEach(item => {
+    item.classList.remove('active');
+  });
+  event.currentTarget.classList.add('active');
+}
+
 // Task and reward handling
 function showTaskDetail(taskName) {
   if (tg && tg.showAlert) {

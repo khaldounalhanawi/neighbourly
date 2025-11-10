@@ -29,6 +29,15 @@
   </div>
 
   <div id="homeView" class="content">
+    <div class="page-header home-header">
+      <img src="main.png" alt="Virtual Community" class="header-bg">
+      <div class="header-overlay">
+        <img src="avatar.png" alt="Neighbourly Logo" class="header-logo">
+        <h1>Welcome to Neighbourly</h1>
+        <p>Where community meets blockchain</p>
+      </div>
+    </div>
+
     <h2 class="section-title">
       <span class="section-icon">🤍</span>
       Community's Awesomest this month
@@ -206,6 +215,14 @@
   </div>
 
   <div id="rewardsView" class="content hidden">
+    <div class="page-header rewards-header">
+      <div class="header-overlay">
+        <img src="avatar.png" alt="Neighbourly Logo" class="header-logo">
+        <h1>Community Rewards</h1>
+        <p>Earn and redeem your time tokens</p>
+      </div>
+    </div>
+
     <h2 class="section-title">
       <span class="section-icon">🎁</span>
       Available Rewards
@@ -273,45 +290,77 @@
   </div>
 
  <div id="tasks" class="content hidden">
+    <div class="page-header partners-header">
+      <div class="header-overlay">
+        <img src="avatar.png" alt="Neighbourly Logo" class="header-logo">
+        <h1>Our Partners</h1>
+        <p>Exclusive offers from local businesses</p>
+      </div>
+    </div>
+
     <h2 class="section-title">
-      <span class="section-icon">🎁</span>
-      Tasks
+      <span class="section-icon">🤝</span>
+      Partner Rewards
     </h2>
 
-    <div class="reward-card" style="position: relative;">
-      <div class="reward-lock">🔒</div>
+    <div class="reward-card">
       <div class="reward-header">
-        <div class="reward-icon" style="background: linear-gradient(135deg, #9333ea, #7e22ce);">👥</div>
+        <div class="reward-icon" style="background: linear-gradient(135deg, #e11d48, #be123c);">🛒</div>
         <div class="reward-info">
-          <div class="reward-title">Networking Event Access</div>
-          <div class="reward-description">Join exclusive networking events with top community members</div>
-          <span class="reward-requirement">Requires: Buddy</span>
+          <div class="reward-title">EDEKA Shopping Bonus</div>
+          <div class="reward-description">Get 10% back in tTON for groceries above €50</div>
+          <span class="reward-requirement">Valid until Dec 31, 2025</span>
         </div>
       </div>
+      <button class="reward-button" onclick="claimReward('EDEKA Bonus')">Get Offer</button>
     </div>
 
     <div class="reward-card">
       <div class="reward-header">
-        <div class="reward-icon" style="background: linear-gradient(135deg, #2563eb, #1e40af);">⭐</div>
+        <div class="reward-icon" style="background: linear-gradient(135deg, #f97316, #ea580c);">�</div>
         <div class="reward-info">
-          <div class="reward-title">Community Workshop Pass</div>
-          <div class="reward-description">Attend skill-sharing workshops and masterclasses</div>
-          <span class="reward-requirement">Requires: Neighbour</span>
+          <div class="reward-title">OBI Tool Rental</div>
+          <div class="reward-description">Free 24h tool rental when helping neighbors with repairs</div>
+          <span class="reward-requirement">3 repair tasks required</span>
         </div>
       </div>
-      <button class="reward-button" onclick="claimReward('Workshop Pass')">Claim Reward</button>
+      <button class="reward-button" onclick="claimReward('OBI Rental')">Check Eligibility</button>
     </div>
 
     <div class="reward-card">
       <div class="reward-header">
-        <div class="reward-icon" style="background: linear-gradient(135deg, #10b981, #059669);">🔄</div>
+        <div class="reward-icon" style="background: linear-gradient(135deg, #8b5cf6, #7c3aed);">👥</div>
         <div class="reward-info">
-          <div class="reward-title">Skill Exchange Program</div>
-          <div class="reward-description">Priority access to skill exchange opportunities</div>
-          <span class="reward-requirement">Requires: Neighbour</span>
+          <div class="reward-title">Invite & Earn Program</div>
+          <div class="reward-description">Earn 5 tTON for each new neighbor you invite</div>
+          <span class="reward-requirement">Max 10 invites/month</span>
         </div>
       </div>
-      <button class="reward-button" onclick="claimReward('Skill Exchange')">Claim Reward</button>
+      <button class="reward-button" onclick="claimReward('Invite Program')">Share Invite</button>
+    </div>
+
+    <div class="reward-card">
+      <div class="reward-header">
+        <div class="reward-icon" style="background: linear-gradient(135deg, #06b6d4, #0891b2);">🎓</div>
+        <div class="reward-info">
+          <div class="reward-title">VHS Course Discount</div>
+          <div class="reward-description">20% off on all Volkshochschule courses</div>
+          <span class="reward-requirement">Buddy status required</span>
+        </div>
+      </div>
+      <button class="reward-button" onclick="claimReward('VHS Discount')">Get Discount</button>
+    </div>
+
+    <div class="reward-card">
+      <div class="reward-header">
+        <div class="reward-icon" style="background: linear-gradient(135deg, #22c55e, #16a34a);">🌳</div>
+        <div class="reward-info">
+          <div class="reward-title">Garden Center Partner</div>
+          <div class="reward-description">15% discount at local garden centers for community projects</div>
+          <span class="reward-requirement">Active gardening volunteer</span>
+        </div>
+      </div>
+      <button class="reward-button" onclick="claimReward('Garden Discount')">View Partners</button>
     </div>
   </div>
   
@@ -402,8 +451,8 @@
       <span class="label">My Rewards</span>
     </button>
     <button class="nav-item" onclick="switchView('tasks')">
-      <span class="icon">💰</span>
-      <span class="label">Tasks</span>
+      <span class="icon">🤝</span>
+      <span class="label">Partners</span>
     </button>
   </div>
 
